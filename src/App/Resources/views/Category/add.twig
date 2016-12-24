@@ -1,0 +1,53 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Home</a></li>
+        <li><a href="{{ path_for('category.get') }}">Categories</a></li>
+        <li class="active">Add category</li>
+    </ol>
+    <div class="page-header">
+        <h2>Add category</h2>
+    </div>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form.group('name', null, 'name', 'Name') }}
+            </div>
+        </div>
+
+        {% if not categories is empty %}
+            <div class="form-group{% if has_error('parent_id') %} has-error{% endif %}">
+                <label for="parent_id">Parent category</label>
+                <select name="parent_id" id="parent_id" class="form-control">
+                    <option value="0">Choose parent category</option>
+                    {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="help-block">{{ error('parent_id') }}</span>
+            </div>
+        {% endif %}
+
+        {% if not properties is empty %}
+            <div class="form-group{% if has_error('properties') %} has-error{% endif %}">
+                <label>Properties</label>
+                <div class="btn-group" data-toggle="buttons">
+                    {% for property in properties %}
+                        <label class="btn btn-default">
+                            <input type="checkbox" name="properties[]" value="{{ property.id }}" autocomplete="off"> {{ property.name }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <span class="help-block">{{ error('properties') }}</span>
+            </div>
+        {% endif %}
+
+        {{ csrf() }}
+        <input type="submit" class="btn btn-primary" value="Create">
+    </form>
+</div>
+
+{% endblock %}

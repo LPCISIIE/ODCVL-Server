@@ -1,0 +1,56 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Home</a></li>
+        <li class="active">Categories</li>
+    </ol>
+    <div class="page-header">
+        <h2>Categories <a href="{{ path_for('category.add') }}" class="btn btn-default pull-right">Add</a></h2>
+    </div>
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th class="text-right">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ category.name }}</td>
+                <td class="text-right">
+                    <a href="{{ path_for('category.edit', {'id': category.id}) }}" class="btn btn-default btn-sm" title="Edit">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <a href="{{ path_for('category.delete', {'id': category.id}) }}" class="btn btn-danger btn-sm" title="Delete">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+                </td>
+            </tr>
+            {% for sub_category in category.subCategories %}
+                <tr>
+                    <td></td>
+                    <td>
+                        <span class="sub-category">{{ sub_category.name }}</span>
+                    </td>
+                    <td class="text-right">
+                        <a href="{{ path_for('category.edit', {'id': sub_category.id}) }}" class="btn btn-default btn-sm" title="Edit">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                        <a href="{{ path_for('category.delete', {'id': sub_category.id}) }}" class="btn btn-danger btn-sm" title="Delete">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
