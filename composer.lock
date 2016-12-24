@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1db655110edd31af03ff07d2d0821a96",
-    "content-hash": "52af555df16d1f6def4a5ddc1ed10edc",
+    "hash": "4aa905b15c219849db95b0a80e72b5f9",
+    "content-hash": "7a5c950d454a6fe28166295ae453cb9d",
     "packages": [
         {
             "name": "awurth/slim-validation",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/awurth/slim-validation.git",
-                "reference": "09c42a063507922ee469dca1ac6430998f72b15e"
+                "reference": "d331bdfdbd0db991cc50bbd08a8735c0d19bfa1e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/awurth/slim-validation/zipball/09c42a063507922ee469dca1ac6430998f72b15e",
-                "reference": "09c42a063507922ee469dca1ac6430998f72b15e",
+                "url": "https://api.github.com/repos/awurth/slim-validation/zipball/d331bdfdbd0db991cc50bbd08a8735c0d19bfa1e",
+                "reference": "d331bdfdbd0db991cc50bbd08a8735c0d19bfa1e",
                 "shasum": ""
             },
             "require": {
@@ -51,7 +51,7 @@
                 "slim",
                 "validation"
             ],
-            "time": "2016-12-14 13:43:41"
+            "time": "2016-12-23 15:03:57"
         },
         {
             "name": "cartalyst/sentinel",
@@ -834,16 +834,16 @@
         },
         {
             "name": "slim/csrf",
-            "version": "0.8.0",
+            "version": "0.8.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim-Csrf.git",
-                "reference": "9aa3d205d39c531933c8890e338217ce5cfa4b98"
+                "reference": "96f2019d2626d71985dc0ca41948f49c3454f4d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim-Csrf/zipball/9aa3d205d39c531933c8890e338217ce5cfa4b98",
-                "reference": "9aa3d205d39c531933c8890e338217ce5cfa4b98",
+                "url": "https://api.github.com/repos/slimphp/Slim-Csrf/zipball/96f2019d2626d71985dc0ca41948f49c3454f4d1",
+                "reference": "96f2019d2626d71985dc0ca41948f49c3454f4d1",
                 "shasum": ""
             },
             "require": {
@@ -880,7 +880,7 @@
                 "middleware",
                 "slim"
             ],
-            "time": "2016-12-06 13:44:41"
+            "time": "2016-12-20 20:45:43"
         },
         {
             "name": "slim/flash",
@@ -932,16 +932,16 @@
         },
         {
             "name": "slim/slim",
-            "version": "3.6.0",
+            "version": "3.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/slimphp/Slim.git",
-                "reference": "a685fe91a9435e1432e8eeb7cf516e2f5cee7f64"
+                "reference": "4254e40d81559e35cdf856bcbaca5f3af468b7ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/slimphp/Slim/zipball/a685fe91a9435e1432e8eeb7cf516e2f5cee7f64",
-                "reference": "a685fe91a9435e1432e8eeb7cf516e2f5cee7f64",
+                "url": "https://api.github.com/repos/slimphp/Slim/zipball/4254e40d81559e35cdf856bcbaca5f3af468b7ef",
+                "reference": "4254e40d81559e35cdf856bcbaca5f3af468b7ef",
                 "shasum": ""
             },
             "require": {
@@ -991,14 +991,14 @@
                 }
             ],
             "description": "Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs",
-            "homepage": "http://slimframework.com",
+            "homepage": "https://slimframework.com",
             "keywords": [
                 "api",
                 "framework",
                 "micro",
                 "router"
             ],
-            "time": "2016-11-20 20:48:49"
+            "time": "2016-12-20 20:30:47"
         },
         {
             "name": "slim/twig-view",
@@ -1228,16 +1228,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v1.29.0",
+            "version": "v1.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "74f723e542368ca2080b252740be5f1113ebb898"
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/74f723e542368ca2080b252740be5f1113ebb898",
-                "reference": "74f723e542368ca2080b252740be5f1113ebb898",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/c6ff71094fde15d12398eaba029434b013dc5e59",
+                "reference": "c6ff71094fde15d12398eaba029434b013dc5e59",
                 "shasum": ""
             },
             "require": {
@@ -1250,7 +1250,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.29-dev"
+                    "dev-master": "1.30-dev"
                 }
             },
             "autoload": {
@@ -1285,7 +1285,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-12-13 17:28:18"
+            "time": "2016-12-23 11:06:22"
         }
     ],
     "packages-dev": [],

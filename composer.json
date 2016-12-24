@@ -1,14 +1,24 @@
 {
-    "name": "awurth/quickslim",
-    "description": "Boilerplate for Slim PHP micro-framework",
-    "keywords": ["slim", "eloquent", "twig", "framework", "boilerplate", "skeleton"],
-    "homepage": "https://github.com/awurth/quickslim",
+    "name": "TPCISIIE/ODCVL",
+    "description": "Application de gestion de stock de matériel sportif",
+    "keywords": ["slim", "eloquent", "twig", "framework"],
+    "homepage": "https://github.com/TPCISIIE/ODCVL",
     "license": "MIT",
     "authors": [
         {
             "name": "Alexis Wurth",
             "email": "alexis.wurth57@gmail.com",
             "homepage": "https://github.com/awurth"
+        },
+        {
+            "name": "Kamel Remaki",
+            "email": "remakikamel@gmail.com",
+            "homepage": "https://github.com/Kameldev"
+        },
+        {
+            "name": "Zakaria El Ouarchi",
+            "email": "realandraja@gmail.com",
+            "homepage": "https://github.com/realandraja"
         }
     ],
     "autoload": {
@@ -17,10 +27,10 @@
         }
     },
     "require": {
-        "slim/slim": "^3.6",
+        "slim/slim": "^3.7",
         "slim/twig-view": "^2.1",
         "slim/flash": "^0.2.0",
-        "slim/csrf": "^0.8.0",
+        "slim/csrf": "^0.8.1",
         "illuminate/database": "^5.3",
         "respect/validation": "^1.1",
         "cartalyst/sentinel": "^2.0",
