@@ -19,14 +19,9 @@ class Product extends Model
         return $properties->merge($this->properties);
     }
 
-    public function image()
+    public function items()
     {
-        return $this->belongsTo('App\Model\Image');
-    }
-
-    public function products()
-    {
-        return $this->hasMany('App\Model\Product');
+        return $this->hasMany('App\Model\Item');
     }
 
     public function properties()

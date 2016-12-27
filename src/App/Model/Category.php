@@ -24,9 +24,9 @@ class Category extends Model
         return $this->hasMany('App\Model\Category', 'parent_id');
     }
 
-    public function equipments()
+    public function products()
     {
-        return $this->belongsToMany('App\Model\Equipment');
+        return $this->belongsToMany('App\Model\Product');
     }
 
     public function properties()

@@ -19,13 +19,13 @@ class Property extends Model
         return $this->belongsToMany('App\Model\Category')->withPivot('required');
     }
 
-    public function equipments()
-    {
-        return $this->belongsToMany('App\Model\Equipment')->withPivot('required');
-    }
-
     public function products()
     {
-        return $this->belongsToMany('App\Model\Products')->withPivot('value');
+        return $this->belongsToMany('App\Model\Product')->withPivot('required');
+    }
+
+    public function items()
+    {
+        return $this->belongsToMany('App\Model\Item')->withPivot('value');
     }
 }

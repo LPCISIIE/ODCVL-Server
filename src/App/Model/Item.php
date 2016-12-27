@@ -16,9 +16,9 @@ class Item extends Model
         'repaired_at'
     ];
 
-    public function equipment()
+    public function product()
     {
-        return $this->belongsTo('App\Model\Equipment');
+        return $this->belongsTo('App\Model\Product');
     }
 
     public function properties()
