@@ -6,6 +6,7 @@ use App\Model\Category;
 use App\Model\Product;
 use App\Model\Property;
 use Respect\Validation\Validator as V;
+use Illuminate\Database\Capsule\Manager as DB;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
@@ -135,11 +136,12 @@ class ProductController extends Controller
             throw $this->notFoundException($request, $response);
         }
 
-        foreach ($product->items as $item) {
-            $item->product()->dissociate();
-            $item->save();
+        $items = array_column($product->items->toArray(), 'id');
+        if (!empty($items)) {
+            DB::table('item_property')->whereIn('item_id', $items)->delete();
         }
 
+        $product->items()->delete();
         $product->properties()->detach();
         $product->categories()->detach();
         $product->delete();
