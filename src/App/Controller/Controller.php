@@ -33,6 +33,11 @@ class Controller
         $this->container = $container;
     }
 
+    public function debug($var)
+    {
+        die('<pre>' . print_r($var, true) . '</pre>');
+    }
+
     /**
      * Redirect to route
      *
