@@ -10,6 +10,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class CategoryController extends Controller
 {
+    /**
+     * Add category
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function add(Request $request, Response $response)
     {
         if ($request->isPost()) {
@@ -55,6 +62,15 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Edit category
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function edit(Request $request, Response $response, $id)
     {
         $category = Category::with('properties')->find($id);
@@ -110,6 +126,15 @@ class CategoryController extends Controller
         ]);
     }
 
+    /**
+     * Delete category
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     * @throws \Slim\Exception\NotFoundException
+     */
     public function delete(Request $request, Response $response, $id)
     {
         $category = Category::find($id);
@@ -123,7 +148,7 @@ class CategoryController extends Controller
             $subCategory->save();
         }
 
-        $category->equipments()->detach();
+        $category->products()->detach();
         $category->properties()->detach();
 
         $category->delete();
@@ -132,6 +157,13 @@ class CategoryController extends Controller
         return $this->redirect($response, 'category.get');
     }
 
+    /**
+     * Get categories list
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function get(Request $request, Response $response)
     {
         $categories = Category::with('subCategories')->where('parent_id', null)->get();
