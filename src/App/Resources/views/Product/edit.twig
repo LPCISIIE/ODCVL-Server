@@ -1,0 +1,54 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Home</a></li>
+        <li><a href="{{ path_for('product.get') }}">Products</a></li>
+        <li class="active">Edit product</li>
+    </ol>
+    <div class="page-header">
+        <h2>Edit product</h2>
+    </div>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                {{ form.group('name', product.name, 'name', 'Name') }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-4{% if has_error('category_id') %} has-error{% endif %}">
+                <label for="category_id">Category</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    {% for category in categories %}
+                        <option value="{{ category.id }}" {% if product.categories.contains(category.id) %} selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="help-block">{{ error('category_id') }}</span>
+            </div>
+        </div>
+
+        {% if not properties is empty %}
+            <div class="form-group{% if has_error('properties') %} has-error{% endif %}">
+                <div class="row">
+                    <label class="col-xs-12">Properties</label>
+                </div>
+                <div class="btn-group" data-toggle="buttons">
+                    {% for property in properties %}
+                        <label class="btn btn-default{% if product.properties.contains(property.id) %} active{% endif %}">
+                            <input type="checkbox" name="properties[]" value="{{ property.id }}" autocomplete="off"{% if product.properties.contains(property.id) %} checked{% endif %}> {{ property.name }}
+                        </label>
+                    {% endfor %}
+                </div>
+                <span class="help-block">{{ error('properties') }}</span>
+            </div>
+        {% endif %}
+
+        {{ csrf() }}
+        <input type="submit" class="btn btn-primary" value="Edit">
+    </form>
+</div>
+
+{% endblock %}
