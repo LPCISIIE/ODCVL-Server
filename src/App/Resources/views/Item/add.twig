@@ -1,0 +1,59 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Home</a></li>
+        <li><a href="{{ path_for('item.get') }}">Items</a></li>
+        <li class="active">Add item</li>
+    </ol>
+    <div class="page-header">
+        <h2>Add item</h2>
+    </div>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form.group('code', null, 'code', 'Code') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                {{ form.group('purchased_at', null, 'purchased_at', 'Purchased at', null, 'text', 'JJ/MM/AAAA') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                {{ form.group('repaired_at', null, 'repaired_at', 'Repaired at', null, 'text', 'JJ/MM/AAAA') }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6{% if has_error('product_id') %} has-error{% endif %}">
+                <label for="product_id">Product</label>
+                <select name="product_id" id="product_id" class="form-control">
+                    <option value="0">Choose product</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}" data-url="{{ path_for('product.properties', {'id': product.id}) }}">{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="help-block">{{ error('product_id') }}</span>
+            </div>
+        </div>
+        <div id="properties"></div>
+        {% if has_error('properties') %}
+            <div class="has-error">
+                <span class="help-block">{{ error('properties') }}</span>
+            </div>
+        {% endif %}
+
+        {{ csrf() }}
+        <input type="submit" class="btn btn-primary" value="Create">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/properties.js') }}"></script>
+{% endblock %}

@@ -68,7 +68,6 @@ class ProductController extends Controller
      * @param Response $response
      * @param string $id
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function edit(Request $request, Response $response, $id)
     {
@@ -126,7 +125,6 @@ class ProductController extends Controller
      * @param Response $response
      * @param string $id
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function delete(Request $request, Response $response, $id)
     {
@@ -148,6 +146,29 @@ class ProductController extends Controller
 
         $this->flash('success', 'Product "' . $product->name . '" deleted');
         return $this->redirect($response, 'product.get');
+    }
+
+    /**
+     * Get product properties
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     */
+    public function getProperties(Request $request, Response $response, $id)
+    {
+        $product = Product::with(['categories', 'properties'])->find($id);
+
+        if (!$product) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        $properties = $product->getProperties();
+
+        return $this->view->render($response, 'Product/properties.twig', [
+            'properties' => $properties
+        ]);
     }
 
     /**

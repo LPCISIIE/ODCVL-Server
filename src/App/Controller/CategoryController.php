@@ -69,7 +69,6 @@ class CategoryController extends Controller
      * @param Response $response
      * @param string $id
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function edit(Request $request, Response $response, $id)
     {
@@ -133,7 +132,6 @@ class CategoryController extends Controller
      * @param Response $response
      * @param string $id
      * @return Response
-     * @throws \Slim\Exception\NotFoundException
      */
     public function delete(Request $request, Response $response, $id)
     {
