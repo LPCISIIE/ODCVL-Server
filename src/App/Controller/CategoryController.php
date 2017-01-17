@@ -20,22 +20,27 @@ class CategoryController extends Controller
     public function add(Request $request, Response $response)
     {
         if ($request->isPost()) {
-            $this->validator->validate($request, ['name' => V::notBlank()]);
+            $this->validator->validate($request, ['name' => V::notBlank()], [
+                'notBlank' => 'Veuillez donner un nom à la catégorie'
+            ]);
 
             $parent = null;
             if ($request->getParam('parent_id')) {
                 $parent = Category::find($request->getParam('parent_id'));
 
                 if (!$parent) {
-                    $this->validator->addError('parent_id', 'Parent category does not exist');
+                    $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
+                } elseif ($parent->parent_id) {
+                    $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
                 }
             }
 
             $propertiesIds = $request->getParam('properties');
+            $requiredIds = $request->getParam('required');
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -47,11 +52,15 @@ class CategoryController extends Controller
 
                 $category->save();
 
-                if ($properties) {
-                    $category->properties()->attach($properties);
+                foreach ($properties as $property) {
+                    if (in_array($property->id, $requiredIds)) {
+                        $category->properties()->attach($property, ['required' => true]);
+                    } else {
+                        $category->properties()->attach($property);
+                    }
                 }
 
-                $this->flash('success', 'Category "' . $category->name . '" added');
+                $this->flash('success', 'Catégorie "' . $category->name . '" ajoutée');
                 return $this->redirect($response, 'category.get');
             }
         }
@@ -79,22 +88,27 @@ class CategoryController extends Controller
         }
 
         if ($request->isPost()) {
-            $this->validator->validate($request, ['name' => V::notBlank()]);
+            $this->validator->validate($request, ['name' => V::notBlank()], [
+                'notBlank' => 'Veuillez donner un nom à la catégorie'
+            ]);
 
             $parent = null;
             if ($request->getParam('parent_id')) {
                 $parent = Category::find($request->getParam('parent_id'));
 
                 if (!$parent) {
-                    $this->validator->addError('parent_id', 'Parent category does not exist');
+                    $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
+                } elseif ($parent->parent_id) {
+                    $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
                 }
             }
 
             $propertiesIds = $request->getParam('properties');
+            $requiredIds = $request->getParam('required');
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -108,12 +122,20 @@ class CategoryController extends Controller
 
                 $category->save();
 
-                $category->properties()->detach();
-                if ($properties) {
-                    $category->properties()->attach($properties);
+                $newProperties = [];
+                foreach ($properties as $property) {
+                    if (in_array($property->id, $requiredIds)) {
+                        $newProperties[$property->id] = ['required' => true];
+                    } else {
+                        $newProperties[] = $property->id;
+                    }
                 }
 
-                $this->flash('success', 'Category "' . $category->name . '" edited');
+                if ($properties) {
+                    $category->properties()->sync($newProperties);
+                }
+
+                $this->flash('success', 'Catégorie "' . $category->name . '" modifiée');
                 return $this->redirect($response, 'category.get');
             }
         }
@@ -151,7 +173,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        $this->flash('success', 'Category "' . $category->name . '" deleted');
+        $this->flash('success', 'Catégorie "' . $category->name . '" supprimée');
         return $this->redirect($response, 'category.get');
     }
 
