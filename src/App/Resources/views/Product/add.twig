@@ -4,25 +4,25 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li><a href="{{ path_for('product.get') }}">Products</a></li>
-        <li class="active">Add product</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('product.get') }}">Produits</a></li>
+        <li class="active">Ajouter un produit</li>
     </ol>
     <div class="page-header">
-        <h2>Add product</h2>
+        <h2>Ajouter un produit</h2>
     </div>
     <form action="" method="POST">
         <div class="row">
             <div class="col-md-6">
-                {{ form.group('name', null, 'name', 'Name') }}
+                {{ form.group('name', val('name'), 'name', 'Nom') }}
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-4{% if has_error('category_id') %} has-error{% endif %}">
-                <label for="category_id">Category</label>
+                <label for="category_id">Catégorie</label>
                 <select name="category_id" id="category_id" class="form-control">
-                    <option value="0">Choose category</option>
+                    <option value="0">Choisissez une catégorie</option>
                     {% for category in categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                     {% endfor %}
@@ -34,7 +34,7 @@
         {% if not properties is empty %}
             <div class="form-group{% if has_error('properties') %} has-error{% endif %}">
                 <div class="row">
-                    <label class="col-xs-12">Properties</label>
+                    <label class="col-xs-12">Propriétés</label>
                 </div>
                 <div class="btn-group" data-toggle="buttons">
                     {% for property in properties %}
@@ -48,7 +48,7 @@
         {% endif %}
 
         {{ csrf() }}
-        <input type="submit" class="btn btn-primary" value="Create">
+        <input type="submit" class="btn btn-primary" value="Créer">
     </form>
 </div>
 

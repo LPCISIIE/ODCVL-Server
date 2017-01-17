@@ -4,25 +4,25 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li><a href="{{ path_for('category.get') }}">Categories</a></li>
-        <li class="active">Edit category</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('category.get') }}">Catégories</a></li>
+        <li class="active">Modifier une catégorie</li>
     </ol>
     <div class="page-header">
-        <h2>Edit category</h2>
+        <h2>Modifier une catégorie</h2>
     </div>
     <form action="" method="POST">
         <div class="row">
             <div class="col-md-4">
-                {{ form.group('name', category.name, 'name', 'Name') }}
+                {{ form.group('name', category.name, 'name', 'Nom') }}
             </div>
         </div>
 
         {% if not categories is empty %}
             <div class="form-group{% if has_error('parent_id') %} has-error{% endif %}">
-                <label for="parent_id">Parent category</label>
+                <label for="parent_id">Catégorie parente</label>
                 <select name="parent_id" id="parent_id" class="form-control">
-                    <option value="0">Choose parent category</option>
+                    <option value="0">Choisissez une catégorie parente</option>
                     {% for parent in categories %}
                         <option value="{{ parent.id }}" {% if parent.id == category.parent_id %} selected{% endif %}>{{ parent.name }}</option>
                     {% endfor %}
@@ -68,7 +68,7 @@
         {% endif %}
 
         {{ csrf() }}
-        <input type="submit" class="btn btn-primary" value="Edit">
+        <input type="submit" class="btn btn-primary" value="Modifier">
     </form>
 </div>
 

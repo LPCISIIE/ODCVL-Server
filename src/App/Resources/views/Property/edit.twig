@@ -4,22 +4,22 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li><a href="{{ path_for('property.get') }}">Properties</a></li>
-        <li class="active">Edit property</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('property.get') }}">Propriétés</a></li>
+        <li class="active">Modifier une propriété</li>
     </ol>
     <div class="page-header">
-        <h2>Edit property</h2>
+        <h2>Modifier une propriété</h2>
     </div>
     <form action="" method="POST">
         <div class="row">
             <div class="col-md-4">
-                {{ form.group('name', property.name, 'name', 'Name') }}
+                {{ form.group('name', property.name, 'name', 'Nom') }}
             </div>
         </div>
 
         {{ csrf() }}
-        <input type="submit" class="btn btn-primary" value="Edit">
+        <input type="submit" class="btn btn-primary" value="Modifier">
     </form>
 </div>
 

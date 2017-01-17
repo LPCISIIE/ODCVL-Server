@@ -4,35 +4,35 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li><a href="{{ path_for('item.get') }}">Items</a></li>
-        <li class="active">Add item</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('item.get') }}">Articles</a></li>
+        <li class="active">Ajouter un article</li>
     </ol>
     <div class="page-header">
-        <h2>Add item</h2>
+        <h2>Ajouter un article</h2>
     </div>
     <form action="" method="POST">
         <div class="row">
             <div class="col-md-4">
-                {{ form.group('code', null, 'code', 'Code') }}
+                {{ form.group('code', val('code'), 'code', 'Code') }}
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                {{ form.group('purchased_at', null, 'purchased_at', 'Purchased at', null, 'text', 'JJ/MM/AAAA') }}
+                {{ form.group('purchased_at', val('purchased_at'), 'purchased_at', 'Date d\'achat', null, 'text', 'JJ/MM/AAAA') }}
             </div>
         </div>
         <div class="row">
             <div class="col-md-2">
-                {{ form.group('repaired_at', null, 'repaired_at', 'Repaired at', null, 'text', 'JJ/MM/AAAA') }}
+                {{ form.group('repaired_at', val('repaired_at'), 'repaired_at', 'Date de réparation', null, 'text', 'JJ/MM/AAAA') }}
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6{% if has_error('product_id') %} has-error{% endif %}">
-                <label for="product_id">Product</label>
+                <label for="product_id">Produit</label>
                 <select name="product_id" id="product_id" class="form-control">
-                    <option value="0">Choose product</option>
+                    <option value="0">Choisissez un produit</option>
                     {% for product in products %}
                         <option value="{{ product.id }}" data-url="{{ path_for('product.properties', {'id': product.id}) }}">{{ product.name }}</option>
                     {% endfor %}
@@ -48,7 +48,7 @@
         {% endif %}
 
         {{ csrf() }}
-        <input type="submit" class="btn btn-primary" value="Create">
+        <input type="submit" class="btn btn-primary" value="Créer">
     </form>
 </div>
 

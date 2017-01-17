@@ -4,23 +4,23 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li><a href="{{ path_for('product.get') }}">Products</a></li>
-        <li class="active">Edit product</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('product.get') }}">Produits</a></li>
+        <li class="active">Modifier un produit</li>
     </ol>
     <div class="page-header">
-        <h2>Edit product</h2>
+        <h2>Modifier un produit</h2>
     </div>
     <form action="" method="POST">
         <div class="row">
             <div class="col-md-6">
-                {{ form.group('name', product.name, 'name', 'Name') }}
+                {{ form.group('name', product.name, 'name', 'Nom') }}
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-4{% if has_error('category_id') %} has-error{% endif %}">
-                <label for="category_id">Category</label>
+                <label for="category_id">Catégorie</label>
                 <select name="category_id" id="category_id" class="form-control">
                     {% for category in categories %}
                         <option value="{{ category.id }}" {% if product.categories.contains(category.id) %} selected{% endif %}>{{ category.name }}</option>
@@ -33,7 +33,7 @@
         {% if not properties is empty %}
             <div class="form-group{% if has_error('properties') %} has-error{% endif %}">
                 <div class="row">
-                    <label class="col-xs-12">Properties</label>
+                    <label class="col-xs-12">Propriétés</label>
                 </div>
                 <div class="btn-group" data-toggle="buttons">
                     {% for property in properties %}
@@ -47,7 +47,7 @@
         {% endif %}
 
         {{ csrf() }}
-        <input type="submit" class="btn btn-primary" value="Edit">
+        <input type="submit" class="btn btn-primary" value="Modifier">
     </form>
 </div>
 

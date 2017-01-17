@@ -31,11 +31,11 @@ class ProductController extends Controller
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if (!$category) {
-                $this->validator->addError('category_id', 'Category does not exist');
+                $this->validator->addError('category_id', 'La catégorie n\'existe pas');
             }
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -50,7 +50,7 @@ class ProductController extends Controller
                     $product->properties()->attach($properties);
                 }
 
-                $this->flash('success', 'Product "' . $product->name . '" added');
+                $this->flash('success', 'Produit "' . $product->name . '" ajouté');
                 return $this->redirect($response, 'product.get');
             }
         }
@@ -87,11 +87,11 @@ class ProductController extends Controller
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if (!$category) {
-                $this->validator->addError('category_id', 'Category does not exist');
+                $this->validator->addError('category_id', 'La catégorie n\'existe pas');
             }
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -106,7 +106,7 @@ class ProductController extends Controller
                     $product->properties()->attach($properties);
                 }
 
-                $this->flash('success', 'Product "' . $product->name . '" edited');
+                $this->flash('success', 'Produit "' . $product->name . '" modifié');
                 return $this->redirect($response, 'product.get');
             }
         }
@@ -144,7 +144,7 @@ class ProductController extends Controller
         $product->categories()->detach();
         $product->delete();
 
-        $this->flash('success', 'Product "' . $product->name . '" deleted');
+        $this->flash('success', 'Produit "' . $product->name . '" supprimé');
         return $this->redirect($response, 'product.get');
     }
 

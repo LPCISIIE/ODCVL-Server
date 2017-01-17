@@ -4,17 +4,17 @@
 
 <div class="container">
     <ol class="breadcrumb">
-        <li><a href="{{ path_for('home') }}">Home</a></li>
-        <li class="active">Categories</li>
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li class="active">Catégories</li>
     </ol>
     <div class="page-header">
-        <h2>Categories <a href="{{ path_for('category.add') }}" class="btn btn-default pull-right">Add</a></h2>
+        <h2>Catégories <a href="{{ path_for('category.add') }}" class="btn btn-default pull-right">Ajouter</a></h2>
     </div>
     <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>Nom</th>
             <th class="text-right">Actions</th>
         </tr>
         </thead>
@@ -24,10 +24,10 @@
                 <td>{{ loop.index }}</td>
                 <td>{{ category.name }}</td>
                 <td class="text-right">
-                    <a href="{{ path_for('category.edit', {'id': category.id}) }}" class="btn btn-default btn-sm" title="Edit">
+                    <a href="{{ path_for('category.edit', {'id': category.id}) }}" class="btn btn-default btn-sm" title="Modifier">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
-                    <a href="{{ path_for('category.delete', {'id': category.id}) }}" class="btn btn-danger btn-sm" title="Delete">
+                    <a href="{{ path_for('category.delete', {'id': category.id}) }}" class="btn btn-danger btn-sm" title="Supprimer">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                 </td>

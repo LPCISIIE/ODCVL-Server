@@ -30,7 +30,7 @@ class PropertyController extends Controller
 
                 $property->save();
 
-                $this->flash('success', 'Property "' . $property->name . '" added');
+                $this->flash('success', 'Propriété "' . $property->name . '" ajoutée');
                 return $this->redirect($response, 'property.get');
             }
         }
@@ -63,7 +63,7 @@ class PropertyController extends Controller
                 $property->name = $request->getParam('name');
                 $property->save();
 
-                $this->flash('success', 'Property "' . $property->name . '" edited');
+                $this->flash('success', 'Propriété "' . $property->name . '" modifiée');
                 return $this->redirect($response, 'property.get');
             }
         }
@@ -94,7 +94,7 @@ class PropertyController extends Controller
         $property->categories()->detach();
         $property->delete();
 
-        $this->flash('success', 'Property "' . $property->name . '" deleted');
+        $this->flash('success', 'Propriété "' . $property->name . '" supprimée');
         return $this->redirect($response, 'property.get');
     }
 

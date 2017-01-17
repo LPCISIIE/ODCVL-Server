@@ -28,20 +28,20 @@ class ItemController extends Controller
             ]);
 
             if (Item::where('code', $request->getParam('code'))->first()) {
-                $this->validator->addError('code', 'Code already exists');
+                $this->validator->addError('code', 'Ce code existe déjà');
             }
 
             $product = Product::find($request->getParam('product_id'));
 
             if (!$product) {
-                $this->validator->addError('product_id', 'Unknown product');
+                $this->validator->addError('product_id', 'Produit inconnu');
             }
 
             $propertiesData = $request->getParam('property');
             $properties = $propertiesData ? Property::whereIn('id', array_keys($propertiesData))->get() : null;
 
             if ($propertiesData && count($propertiesData) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -58,7 +58,7 @@ class ItemController extends Controller
                     $item->properties()->attach($id, ['value' => $value]);
                 }
 
-                $this->flash('success', 'Item "' . $item->name . '" added');
+                $this->flash('success', 'Article "' . $item->name . '" ajouté');
                 return $this->redirect($response, 'item.get');
             }
         }
@@ -93,14 +93,14 @@ class ItemController extends Controller
             $product = Product::find($request->getParam('product_id'));
 
             if (!$product) {
-                $this->validator->addError('product_id', 'Unknown product');
+                $this->validator->addError('product_id', 'Produit inconnu');
             }
 
             $propertiesData = $request->getParam('property');
             $properties = $propertiesData ? Property::whereIn('id', array_keys($propertiesData))->get() : null;
 
             if ($propertiesData && count($propertiesData) != $properties->count()) {
-                $this->validator->addError('properties', 'One or more properties don\'t exist');
+                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
             }
 
             if ($this->validator->isValid()) {
@@ -112,12 +112,13 @@ class ItemController extends Controller
                 $item->product()->associate($product);
                 $item->save();
 
-                $item->properties()->detach();
+                $newProperties = [];
                 foreach ($propertiesData as $propId => $value) {
-                    $item->properties()->attach($propId, ['value' => $value]);
+                    $newProperties[$propId] = ['value' => $value];
                 }
+                $item->properties()->sync($newProperties);
 
-                $this->flash('success', 'Item "' . $item->code . '" edited');
+                $this->flash('success', 'Article "' . $item->code . '" modifié');
                 return $this->redirect($response, 'item.get');
             }
         }
@@ -147,7 +148,7 @@ class ItemController extends Controller
         $item->properties()->detach();
         $item->delete();
 
-        $this->flash('success', 'Item "' . $item->code . '" deleted');
+        $this->flash('success', 'Article "' . $item->code . '" supprimé');
         return $this->redirect($response, 'item.get');
     }
 

@@ -20,13 +20,13 @@ class AuthController extends Controller
 
             try {
                 if ($this->auth->authenticate($credentials, $remember)) {
-                    $this->flash('success', 'You have been logged in.');
+                    $this->flash('success', 'Vous êtes maintenant connecté.');
                     return $this->redirect($response, 'home');
                 } else {
-                    $this->flash('danger', 'Bad username or password.');
+                    $this->flash('danger', 'Mauvais nom d\'utilisateur ou mot de passe.');
                 }
             } catch (ThrottlingException $e) {
-                $this->flash('danger', 'Too many attempts!');
+                $this->flash('danger', 'Trop de connexions!');
             }
 
             return $this->redirect($response, 'login');
@@ -50,11 +50,11 @@ class AuthController extends Controller
             ]);
 
             if ($this->auth->findByCredentials(['login' => $username])) {
-                $this->validator->addError('username', 'User already exists with this username.');
+                $this->validator->addError('username', 'Un utilisateur existe déjà avec ce nom.');
             }
 
             if ($this->auth->findByCredentials(['login' => $email])) {
-                $this->validator->addError('email', 'User already exists with this email address.');
+                $this->validator->addError('email', 'Un utilisateur existe déjà avec cette adresse email.');
             }
 
             if ($this->validator->isValid()) {
@@ -71,7 +71,7 @@ class AuthController extends Controller
 
                 $role->users()->attach($user);
 
-                $this->flash('success', 'Your account has been created.');
+                $this->flash('success', 'Vous compte a été créé.');
                 return $this->redirect($response, 'login');
             }
         }
@@ -83,7 +83,7 @@ class AuthController extends Controller
     {
         $this->auth->logout();
 
-        $this->flash('success', 'You have been logged out.');
+        $this->flash('success', 'Vous avec été déconnecté.');
         return $this->redirect($response, 'home');
     }
 }
