@@ -131,9 +131,7 @@ class CategoryController extends Controller
                     }
                 }
 
-                if ($properties) {
-                    $category->properties()->sync($newProperties);
-                }
+                $category->properties()->sync($newProperties);
 
                 $this->flash('success', 'Catégorie "' . $category->name . '" modifiée');
                 return $this->redirect($response, 'category.get');
