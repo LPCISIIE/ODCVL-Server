@@ -7,7 +7,7 @@ use App\Model\Product;
 use App\Model\Property;
 use Respect\Validation\Validator as V;
 use Illuminate\Database\Capsule\Manager as DB;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ProductController extends Controller

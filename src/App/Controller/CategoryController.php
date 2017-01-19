@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Model\Category;
 use App\Model\Property;
 use Respect\Validation\Validator as V;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class CategoryController extends Controller

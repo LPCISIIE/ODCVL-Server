@@ -6,7 +6,7 @@ use App\Model\Item;
 use App\Model\Product;
 use App\Model\Property;
 use Respect\Validation\Validator as V;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ItemController extends Controller
