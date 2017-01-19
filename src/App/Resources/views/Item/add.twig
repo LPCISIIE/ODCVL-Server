@@ -29,15 +29,17 @@
         </div>
 
         <div class="row">
-            <div class="form-group col-md-6{% if has_error('product_id') %} has-error{% endif %}">
-                <label for="product_id">Produit</label>
-                <select name="product_id" id="product_id" class="form-control">
-                    <option value="0">Choisissez un produit</option>
-                    {% for product in products %}
-                        <option value="{{ product.id }}" data-url="{{ path_for('product.properties', {'id': product.id}) }}">{{ product.name }}</option>
-                    {% endfor %}
-                </select>
-                <span class="help-block">{{ error('product_id') }}</span>
+            <div class="col-md-6">
+                <div class="form-group{% if has_error('product_id') %} has-error{% endif %}">
+                    <label for="product_id">Produit</label>
+                    <select name="product_id" id="product_id" class="form-control">
+                        <option value="">Choisissez un produit</option>
+                        {% for product in products %}
+                            <option value="{{ product.id }}" data-url="{{ path_for('product.properties', {'id': product.id}) }}"{% if val('product_id') == product.id %} selected{% endif %}>{{ product.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <span class="help-block">{{ error('product_id') }}</span>
+                </div>
             </div>
         </div>
         <div id="properties"></div>

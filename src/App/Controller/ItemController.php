@@ -23,8 +23,13 @@ class ItemController extends Controller
         if ($request->isPost()) {
             $this->validator->validate($request, [
                 'code' => V::notBlank()->alnum(),
-                'purchased_at' => V::date('d/m/Y'),
-                'repaired_at' => V::optional(V::date('d/m/Y'))
+                'purchased_at' => V::notBlank()->date('d/m/Y'),
+                'repaired_at' => V::optional(V::date('d/m/Y')),
+                'product_id' => V::notBlank()
+            ], [
+                'notBlank' => 'Ce champ est requis',
+                'alnum' => 'Le code ne peut contenir que des lettres et des chiffres',
+                'date' => '{{name}} n\'est pas une date valide'
             ]);
 
             if (Item::where('code', $request->getParam('code'))->first()) {
@@ -86,8 +91,12 @@ class ItemController extends Controller
 
         if ($request->isPost()) {
             $this->validator->validate($request, [
-                'purchased_at' => V::date('d/m/Y'),
-                'repaired_at' => V::optional(V::date('d/m/Y'))
+                'purchased_at' => V::notBlank()->date('d/m/Y'),
+                'repaired_at' => V::optional(V::date('d/m/Y')),
+                'product_id' => V::notBlank()
+            ], [
+                'notBlank' => 'Ce champ est requis',
+                'date' => '{{name}} n\'est pas une date valide'
             ]);
 
             $product = Product::find($request->getParam('product_id'));
