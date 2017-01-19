@@ -22,12 +22,17 @@ class ProductController extends Controller
     public function add(Request $request, Response $response)
     {
         if ($request->isPost()) {
-            $this->validator->validate($request, [
-                'name' => V::notBlank()
+            $this->validator->validate($request, ['name' => V::notBlank()], [
+                'notBlank' => 'Veuillez donner un nom au produit'
+            ]);
+
+            $this->validator->validate($request, ['category_id' => V::notBlank()], [
+                'notBlank' => 'Veuillez sélectionner une catégorie'
             ]);
 
             $category = Category::find($request->getParam('category_id'));
             $propertiesIds = $request->getParam('properties');
+            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if (!$category) {
@@ -46,8 +51,12 @@ class ProductController extends Controller
                 $product->save();
                 $product->categories()->attach($category);
 
-                if ($properties) {
-                    $product->properties()->attach($properties);
+                foreach ($properties as $property) {
+                    if (in_array($property->id, $requiredIds)) {
+                        $product->properties()->attach($property, ['required' => true]);
+                    } else {
+                        $product->properties()->attach($property);
+                    }
                 }
 
                 $this->flash('success', 'Produit "' . $product->name . '" ajouté');
@@ -78,12 +87,13 @@ class ProductController extends Controller
         }
 
         if ($request->isPost()) {
-            $this->validator->validate($request, [
-                'name' => V::notBlank()
+            $this->validator->validate($request, ['name' => V::notBlank()], [
+                'notBlank' => 'Veuillez donner un nom au produit'
             ]);
 
             $category = Category::find($request->getParam('category_id'));
             $propertiesIds = $request->getParam('properties');
+            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if (!$category) {
@@ -98,13 +108,14 @@ class ProductController extends Controller
                 $product->name = $request->getParam('name');
                 $product->save();
 
-                $product->categories()->detach();
-                $product->categories()->attach($category);
+                $product->categories()->sync([$category->id]);
 
-                $product->properties()->detach();
-                if ($properties) {
-                    $product->properties()->attach($properties);
+                $newProperties = [];
+                foreach ($properties as $property) {
+                    $newProperties[$property->id] = ['required' => in_array($property->id, $requiredIds)];
                 }
+
+                $product->properties()->sync($newProperties);
 
                 $this->flash('success', 'Produit "' . $product->name . '" modifié');
                 return $this->redirect($response, 'product.get');
