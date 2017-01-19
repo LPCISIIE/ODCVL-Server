@@ -36,7 +36,7 @@ class CategoryController extends Controller
             }
 
             $propertiesIds = $request->getParam('properties');
-            $requiredIds = $request->getParam('required');
+            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
@@ -104,7 +104,7 @@ class CategoryController extends Controller
             }
 
             $propertiesIds = $request->getParam('properties');
-            $requiredIds = $request->getParam('required');
+            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
             $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
 
             if ($propertiesIds && count($propertiesIds) != $properties->count()) {
@@ -124,11 +124,7 @@ class CategoryController extends Controller
 
                 $newProperties = [];
                 foreach ($properties as $property) {
-                    if (in_array($property->id, $requiredIds)) {
-                        $newProperties[$property->id] = ['required' => true];
-                    } else {
-                        $newProperties[] = $property->id;
-                    }
+                    $newProperties[$property->id] = ['required' => in_array($property->id, $requiredIds)];
                 }
 
                 $category->properties()->sync($newProperties);
