@@ -46,11 +46,12 @@
                     <tbody>
                     {% for property in properties %}
                         {% set selected = category.properties.contains(property.id) %}
+                        {% set required = category.properties.where('id', property.id).first().pivot.required %}
                         <tr>
                             <td>{{ loop.index }}</td>
                             <td>{{ property.name }}</td>
                             <td class="text-center">
-                                <input type="checkbox" name="required[]" value="{{ property.id }}"{% if selected and category.properties.where('id', property.id).first().pivot.required %} checked{% endif %}>
+                                <input type="checkbox" name="required[]" value="{{ property.id }}"{% if selected and required %} checked{% endif %}>
                             </td>
                             <td class="text-right">
                                 <div class="btn-group" data-toggle="buttons">
