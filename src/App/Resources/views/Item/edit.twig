@@ -1,0 +1,67 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('product.get') }}">Articles</a></li>
+        <li class="active">Modifier un article</li>
+    </ol>
+    <div class="page-header">
+        <h2>Modifier un article</h2>
+    </div>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form.group('code', item.code, 'code', 'Code', null, 'text', null, true) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                {{ form.group('purchased_at', item.purchased_at|date('d/m/Y'), 'purchased_at', 'Purchased at', null, 'text', 'JJ/MM/AAAA') }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                {{ form.group('repaired_at', item.repaired_at|date('d/m/Y'), 'repaired_at', 'Repaired at', null, 'text', 'JJ/MM/AAAA') }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6{% if has_error('product_id') %} has-error{% endif %}">
+                <label for="product_id">Produit</label>
+                <select name="product_id" id="product_id" class="form-control">
+                    <option value="">Choisissez un produit</option>
+                    {% for product in products %}
+                        <option value="{{ product.id }}" data-url="{{ path_for('product.properties', {'id': product.id}) }}"{% if product.id == item.product.id %} selected{% endif %}>{{ product.name }}</option>
+                    {% endfor %}
+                </select>
+                <span class="help-block">{{ error('product_id') }}</span>
+            </div>
+        </div>
+        <div id="properties">
+            <div class="row">
+                {% for property in item.properties %}
+                    <div class="col-md-6">
+                        {{ form.group('property[' ~ property.id ~ ']', property.pivot.value, 'property[' ~ property.id ~ ']', property.name) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% if has_error('properties') %}
+            <div class="has-error">
+                <span class="help-block">{{ error('properties') }}</span>
+            </div>
+        {% endif %}
+
+        {{ csrf() }}
+        <input type="submit" class="btn btn-primary" value="Modifier">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/properties.js') }}"></script>
+{% endblock %}

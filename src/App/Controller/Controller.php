@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use Awurth\Slim\Validation\Validator;
 use Cartalyst\Sentinel\Sentinel;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Interop\Container\ContainerInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\NotFoundException;
 use Slim\Flash\Messages;
 use Slim\Router;
@@ -31,6 +31,31 @@ class Controller
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    /**
+     * Stop the script and print info about a variable
+     *
+     * @param mixed $data
+     */
+    public function debug($data)
+    {
+        die('<pre>' . print_r($data, true) . '</pre>');
+    }
+    /**
+     * Get request params
+     *
+     * @param Request $request
+     * @param string[] $params
+     * @return array
+     */
+    public function params(Request $request, array $params)
+    {
+        $data = [];
+        foreach ($params as $param) {
+            $data[$param] = $request->getParam($param);
+        }
+        return $data;
     }
 
     /**
@@ -99,11 +124,11 @@ class Controller
     /**
      * Create new NotFoundException
      *
-     * @param ServerRequestInterface $request
+     * @param Request $request
      * @param Response $response
      * @return NotFoundException
      */
-    public function notFoundException(ServerRequestInterface $request, Response $response)
+    public function notFoundException(Request $request, Response $response)
     {
         return new NotFoundException($request, $response);
     }

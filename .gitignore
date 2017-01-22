@@ -1,3 +1,5 @@
 vendor
 cache/*
 !cache/.gitkeep
+*.css.map
+bootstrap/db.php

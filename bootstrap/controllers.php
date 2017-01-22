@@ -7,3 +7,19 @@ $container['AppController'] = function ($container) {
 $container['AuthController'] = function ($container) {
     return new App\Controller\AuthController($container);
 };
+
+$container['CategoryController'] = function ($container) {
+    return new App\Controller\CategoryController($container);
+};
+
+$container['ProductController'] = function ($container) {
+    return new App\Controller\ProductController($container);
+};
+
+$container['ItemController'] = function ($container) {
+    return new App\Controller\ItemController($container);
+};
+
+$container['PropertyController'] = function ($container) {
+    return new App\Controller\PropertyController($container);
+};

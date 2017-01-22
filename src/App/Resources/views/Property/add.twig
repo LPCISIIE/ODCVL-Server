@@ -1,0 +1,26 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="{{ path_for('home') }}">Accueil</a></li>
+        <li><a href="{{ path_for('property.get') }}">Propriétés</a></li>
+        <li class="active">Ajouter une propriété</li>
+    </ol>
+    <div class="page-header">
+        <h2>Ajouter une propriété</h2>
+    </div>
+    <form action="" method="POST">
+        <div class="row">
+            <div class="col-md-4">
+                {{ form.group('name', null, 'name', 'Nom') }}
+            </div>
+        </div>
+
+        {{ csrf() }}
+        <input type="submit" class="btn btn-primary" value="Créer">
+    </form>
+</div>
+
+{% endblock %}
