@@ -16,7 +16,9 @@ var togglePropertiesForm = function (select) {
     }
 };
 
-togglePropertiesForm(productSelect);
+if (container.is(':empty')) {
+    togglePropertiesForm(productSelect);
+}
 
 productSelect.change(function () {
     togglePropertiesForm($(this));
