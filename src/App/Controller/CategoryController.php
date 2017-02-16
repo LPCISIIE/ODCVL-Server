@@ -59,7 +59,7 @@ class CategoryController extends Controller
         if ($request->getParam('parent_id')) {
             $parent = Category::find($request->getParam('parent_id'));
 
-            if (!$parent) {
+            if (null === $parent) {
                 $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
             } elseif ($parent->parent_id) {
                 $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
@@ -95,7 +95,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (!$category) {
+        if (null === $category) {
             throw $this->notFoundException($request, $response);
         }
 
@@ -107,7 +107,7 @@ class CategoryController extends Controller
         if ($request->getParam('parent_id')) {
             $parent = Category::find($request->getParam('parent_id'));
 
-            if (!$parent) {
+            if (null === $parent) {
                 $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
             } elseif ($parent->parent_id) {
                 $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
@@ -143,7 +143,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (!$category) {
+        if (null === $category) {
             throw $this->notFoundException($request, $response);
         }
 
