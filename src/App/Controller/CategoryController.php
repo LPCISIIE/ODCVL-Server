@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::with('subCategories')->where('parent_id', null)->get();
 
-        return $this->json($response, $categories);
+        return $this->ok($response, $categories);
     }
 
     /**
@@ -35,7 +35,11 @@ class CategoryController extends Controller
     {
         $category = Category::with('subCategories')->find($id);
 
-        return $this->json($response, $category);
+        if (null === $category) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        return $this->ok($response, $category);
     }
 
     /**
