@@ -1,11 +1,9 @@
 <?php
 
 $app->group('/products', function () {
-    $this->map(['GET', 'POST'], '/add', 'ProductController:add')->setName('product.add');
-    $this->map(['GET', 'POST'], '/{id:[0-9]+}/edit', 'ProductController:edit')->setName('product.edit');
-    $this->get('/{id:[0-9]+}/delete', 'ProductController:delete')->setName('product.delete');
-
-    $this->get('/{id:[0-9]+}/properties', 'ProductController:getProperties')->setName('product.properties');
-
-    $this->get('', 'ProductController:get')->setName('product.get');
+    $this->get('', 'ProductController:getCollection')->setName('get_products');
+    $this->get('/{id:[0-9]+}', 'ProductController:get')->setName('get_product');
+    $this->post('', 'ProductController:post')->setName('post_product');
+    $this->put('/{id:[0-9]+}', 'ProductController:put')->setName('put_product');
+    $this->delete('/{id:[0-9]+}', 'ProductController:delete')->setName('delete_product');
 });
