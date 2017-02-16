@@ -125,7 +125,7 @@ class CategoryController extends Controller
 
             $category->save();
 
-            return $this->ok($response);
+            return $this->noContent($response);
         }
 
         return $this->validationErrors($response);
