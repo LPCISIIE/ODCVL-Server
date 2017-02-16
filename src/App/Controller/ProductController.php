@@ -103,7 +103,7 @@ class ProductController extends Controller
 
             $category = Category::find($request->getParam('category_id'));
 
-            if (!$category) {
+            if (null === $category) {
                 $this->validator->addError('category_id', 'La catégorie n\'existe pas');
             }
 
