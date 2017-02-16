@@ -20,14 +20,14 @@ Manager::schema()->dropIfExists('roles');
 Manager::schema()->dropIfExists('user');
 
 Manager::schema()->dropIfExists('category_product');
-Manager::schema()->dropIfExists('product_property');
-Manager::schema()->dropIfExists('item_property');
-Manager::schema()->dropIfExists('category_property');
+// Manager::schema()->dropIfExists('product_property');
+// Manager::schema()->dropIfExists('item_property');
+// Manager::schema()->dropIfExists('category_property');
 
 Manager::schema()->dropIfExists('item');
 Manager::schema()->dropIfExists('category');
 Manager::schema()->dropIfExists('product');
-Manager::schema()->dropIfExists('property');
+// Manager::schema()->dropIfExists('property');
 
 require __DIR__ . '/database/auth.php';
 require __DIR__ . '/database/stock.php';
