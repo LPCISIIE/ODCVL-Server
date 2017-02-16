@@ -26,27 +26,27 @@ $products = [
     'ALLTRACK 120 ROSSIGNOL'
 ];
 
-$properties = [
+/* $properties = [
     'Pointure',
     'Diamètre des roues',
     'Taille'
-];
+]; */
 
 $items = [
     [
         'code' => 'BHVHV45',
         'product' => 1,
-        'pointure' => 42
+        // 'pointure' => 42
     ],
     [
         'code' => 'IKNBG78',
         'product' => 2,
-        'pointure' => 39
+        // 'pointure' => 39
     ],
     [
         'code' => 'FPHOI88',
         'product' => 1,
-        'pointure' => 43
+        // 'pointure' => 43
     ],
 ];
 
@@ -74,12 +74,12 @@ foreach ($products as $product) {
     $p->categories()->attach(2);
 }
 
-foreach ($properties as $property) {
+/* foreach ($properties as $property) {
     $p = new \App\Model\Property([
         'name' => $property
     ]);
     $p->save();
-}
+} */
 
 foreach ($items as $item) {
     $i = new \App\Model\Item([
@@ -89,5 +89,5 @@ foreach ($items as $item) {
     $i->product()->associate($item['product']);
     $i->save();
 
-    $i->properties()->attach(1, ['value' => $item['pointure']]);
+    // $i->properties()->attach(1, ['value' => $item['pointure']]);
 }

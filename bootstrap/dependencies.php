@@ -21,10 +21,6 @@ $container['auth'] = function () {
     return $sentinel->getSentinel();
 };
 
-$container['flash'] = function () {
-    return new \Slim\Flash\Messages();
-};
-
 $container['validator'] = function () {
     return new \Awurth\Slim\Validation\Validator();
 };
@@ -43,7 +39,6 @@ $container['view'] = function ($container) {
     $view->addExtension(new \App\TwigExtension\Asset($container['request']));
     $view->addExtension(new \Awurth\Slim\Validation\ValidatorExtension($container['validator']));
 
-    $view->getEnvironment()->addGlobal('flash', $container['flash']);
     $view->getEnvironment()->addGlobal('auth', $container['auth']);
 
     return $view;

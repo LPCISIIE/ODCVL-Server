@@ -2,7 +2,6 @@
 return [
     'settings' => [
 
-        'determineRouteBeforeAppMiddleware' => false,
         'displayErrorDetails' => true,
 
         'view' => [
