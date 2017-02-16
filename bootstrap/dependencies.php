@@ -44,6 +44,17 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+        return $container['response']
+            ->withStatus(404)
+            ->withJson([
+                'status' => 404,
+                'description' => 'Resource not found'
+            ]);
+    };
+};
+
 $container['foundHandler'] = function() {
     return new \Slim\Handlers\Strategies\RequestResponseArgs();
 };
