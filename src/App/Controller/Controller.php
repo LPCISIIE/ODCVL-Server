@@ -89,7 +89,7 @@ class Controller
      * @param mixed $data
      * @return int
      */
-    public function ok(Response $response, $data = null)
+    public function ok(Response $response, $data)
     {
         return $this->json($response, $data);
     }
@@ -111,11 +111,11 @@ class Controller
      * Return "204 No Content" response
      *
      * @param Response $response
-     * @return int
+     * @return Response
      */
     public function noContent(Response $response)
     {
-        return $this->write($response, null, 204);
+        return $response->withStatus(204);
     }
 
     /**
@@ -139,7 +139,7 @@ class Controller
      */
     public function json(Response $response, $data, $status = 200)
     {
-        return $this->write($response, json_encode($data), $status);
+        return $response->withJson($data, $status);
     }
 
     /**
