@@ -28,9 +28,4 @@ class Category extends Model
     {
         return $this->belongsToMany('App\Model\Product');
     }
-
-    public function properties()
-    {
-        return $this->belongsToMany('App\Model\Property')->withPivot('required');
-    }
 }

@@ -64,7 +64,7 @@ class Controller
      * @param array $params
      * @return Response
      */
-    public function redirect(Response $response, $route, array $params = array())
+    public function redirect(Response $response, $route, array $params = [])
     {
         return $response->withRedirect($this->router->pathFor($route, $params));
     }
@@ -83,6 +83,53 @@ class Controller
     }
 
     /**
+     * Return "200 Ok" response with JSON data
+     *
+     * @param Response $response
+     * @param mixed $data
+     * @return int
+     */
+    public function ok(Response $response, $data)
+    {
+        return $this->json($response, $data);
+    }
+
+    /**
+     * Return "201 Created" response with location header
+     *
+     * @param Response $response
+     * @param string $route
+     * @param array $params
+     * @return Response
+     */
+    public function created(Response $response, $route, array $params = [])
+    {
+        return $this->redirect($response, $route, $params)->withStatus(201);
+    }
+
+    /**
+     * Return "204 No Content" response
+     *
+     * @param Response $response
+     * @return Response
+     */
+    public function noContent(Response $response)
+    {
+        return $response->withStatus(204);
+    }
+
+    /**
+     * Return validation errors as a JSON array
+     *
+     * @param Response $response
+     * @return int
+     */
+    public function validationErrors(Response $response)
+    {
+        return $this->json($response, $this->validator->getErrors(), 400);
+    }
+
+    /**
      * Write JSON in the response body
      *
      * @param Response $response
@@ -92,7 +139,7 @@ class Controller
      */
     public function json(Response $response, $data, $status = 200)
     {
-        return $this->write($response, json_encode($data), $status);
+        return $response->withJson($data, $status);
     }
 
     /**

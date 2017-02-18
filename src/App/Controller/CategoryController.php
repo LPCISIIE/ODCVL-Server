@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Model\Category;
-use App\Model\Property;
 use Respect\Validation\Validator as V;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -11,64 +10,77 @@ use Psr\Http\Message\ResponseInterface as Response;
 class CategoryController extends Controller
 {
     /**
+     * Get categories list
+     *
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function getCollection(Request $request, Response $response)
+    {
+        $categories = Category::with('subCategories')->where('parent_id', null)->get();
+
+        return $this->ok($response, $categories);
+    }
+
+    /**
+     * Get one category
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     */
+    public function get(Request $request, Response $response, $id)
+    {
+        $category = Category::with('subCategories')->find($id);
+
+        if (null === $category) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        return $this->ok($response, $category);
+    }
+
+    /**
      * Add category
      *
      * @param Request $request
      * @param Response $response
      * @return Response
      */
-    public function add(Request $request, Response $response)
+    public function post(Request $request, Response $response)
     {
-        if ($request->isPost()) {
-            $this->validator->validate($request, ['name' => V::notBlank()], [
-                'notBlank' => 'Veuillez donner un nom à la catégorie'
-            ]);
+        $this->validator->validate($request, ['name' => V::notBlank()], [
+            'notBlank' => 'Veuillez donner un nom à la catégorie'
+        ]);
 
-            $parent = null;
-            if ($request->getParam('parent_id')) {
-                $parent = Category::find($request->getParam('parent_id'));
+        $parent = null;
+        if ($request->getParam('parent_id')) {
+            $parent = Category::find($request->getParam('parent_id'));
 
-                if (!$parent) {
-                    $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
-                } elseif ($parent->parent_id) {
-                    $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
-                }
-            }
-
-            $propertiesIds = $request->getParam('properties');
-            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
-            $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
-
-            if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
-            }
-
-            if ($this->validator->isValid()) {
-                $category = new Category(['name' => $request->getParam('name')]);
-
-                if ($parent) {
-                    $category->parent()->associate($parent);
-                }
-
-                $category->save();
-
-                foreach ($properties as $property) {
-                    if (in_array($property->id, $requiredIds)) {
-                        $category->properties()->attach($property, ['required' => true]);
-                    } else {
-                        $category->properties()->attach($property);
-                    }
-                }
-
-                $this->flash('success', 'Catégorie "' . $category->name . '" ajoutée');
-                return $this->redirect($response, 'category.get');
+            if (null === $parent) {
+                $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
+            } elseif ($parent->parent_id) {
+                $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
             }
         }
 
-        return $this->view->render($response, 'Category/add.twig', [
-            'categories' => Category::whereDoesntHave('parent')->get(),
-            'properties' => Property::all()
-        ]);
+        if ($this->validator->isValid()) {
+            $category = new Category(['name' => $request->getParam('name')]);
+
+            if ($parent) {
+                $category->parent()->associate($parent);
+            }
+
+            $category->save();
+
+            return $this->created($response, 'get_category', [
+                'id' => $category->id
+            ]);
+        }
+
+        return $this->validationErrors($response);
     }
 
     /**
@@ -79,66 +91,44 @@ class CategoryController extends Controller
      * @param string $id
      * @return Response
      */
-    public function edit(Request $request, Response $response, $id)
+    public function put(Request $request, Response $response, $id)
     {
-        $category = Category::with('properties')->find($id);
+        $category = Category::find($id);
 
-        if (!$category) {
+        if (null === $category) {
             throw $this->notFoundException($request, $response);
         }
 
-        if ($request->isPost()) {
-            $this->validator->validate($request, ['name' => V::notBlank()], [
-                'notBlank' => 'Veuillez donner un nom à la catégorie'
-            ]);
+        $this->validator->validate($request, ['name' => V::notBlank()], [
+            'notBlank' => 'Veuillez donner un nom à la catégorie'
+        ]);
 
-            $parent = null;
-            if ($request->getParam('parent_id')) {
-                $parent = Category::find($request->getParam('parent_id'));
+        $parent = null;
+        if ($request->getParam('parent_id')) {
+            $parent = Category::find($request->getParam('parent_id'));
 
-                if (!$parent) {
-                    $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
-                } elseif ($parent->parent_id) {
-                    $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
-                }
-            }
-
-            $propertiesIds = $request->getParam('properties');
-            $requiredIds = $request->getParam('required') ? $request->getParam('required') : [];
-            $properties = $propertiesIds ? Property::whereIn('id', $propertiesIds)->get() : null;
-
-            if ($propertiesIds && count($propertiesIds) != $properties->count()) {
-                $this->validator->addError('properties', 'Une ou plusieurs propriétés n\'existent pas');
-            }
-
-            if ($this->validator->isValid()) {
-                $category->name = $request->getParam('name');
-
-                if ($parent) {
-                    $category->parent()->associate($parent);
-                } else {
-                    $category->parent()->dissociate();
-                }
-
-                $category->save();
-
-                $newProperties = [];
-                foreach ($properties as $property) {
-                    $newProperties[$property->id] = ['required' => in_array($property->id, $requiredIds)];
-                }
-
-                $category->properties()->sync($newProperties);
-
-                $this->flash('success', 'Catégorie "' . $category->name . '" modifiée');
-                return $this->redirect($response, 'category.get');
+            if (null === $parent) {
+                $this->validator->addError('parent_id', 'La catégorie parente n\'existe pas');
+            } elseif ($parent->parent_id) {
+                $this->validator->addError('parent_id', 'Vous ne pouvez pas ajouter de catégories à une sous-catégorie');
             }
         }
 
-        return $this->view->render($response, 'Category/edit.twig', [
-            'categories' => Category::whereDoesntHave('parent')->get(),
-            'category' => $category,
-            'properties' => Property::all()
-        ]);
+        if ($this->validator->isValid()) {
+            $category->name = $request->getParam('name');
+
+            if ($parent) {
+                $category->parent()->associate($parent);
+            } else {
+                $category->parent()->dissociate();
+            }
+
+            $category->save();
+
+            return $this->noContent($response);
+        }
+
+        return $this->validationErrors($response);
     }
 
     /**
@@ -153,7 +143,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
 
-        if (!$category) {
+        if (null === $category) {
             throw $this->notFoundException($request, $response);
         }
 
@@ -163,27 +153,9 @@ class CategoryController extends Controller
         }
 
         $category->products()->detach();
-        $category->properties()->detach();
 
         $category->delete();
 
-        $this->flash('success', 'Catégorie "' . $category->name . '" supprimée');
-        return $this->redirect($response, 'category.get');
-    }
-
-    /**
-     * Get categories list
-     *
-     * @param Request $request
-     * @param Response $response
-     * @return Response
-     */
-    public function get(Request $request, Response $response)
-    {
-        $categories = Category::with('subCategories')->where('parent_id', null)->get();
-
-        return $this->view->render($response, 'Category/get.twig', [
-            'categories' => $categories
-        ]);
+        return $this->noContent($response);
     }
 }

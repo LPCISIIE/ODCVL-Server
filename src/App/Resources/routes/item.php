@@ -1,8 +1,9 @@
 <?php
 
 $app->group('/items', function () {
-    $this->map(['GET', 'POST'], '/add', 'ItemController:add')->setName('item.add');
-    $this->map(['GET', 'POST'], '/{id:[0-9]+}/edit', 'ItemController:edit')->setName('item.edit');
-    $this->get('/{id:[0-9]+}/delete', 'ItemController:delete')->setName('item.delete');
-    $this->get('', 'ItemController:get')->setName('item.get');
+    $this->get('', 'ItemController:getCollection')->setName('get_items');
+    $this->get('/{id:[0-9]+}', 'ItemController:get')->setName('get_item');
+    $this->post('', 'ItemController:post')->setName('post_item');
+    $this->put('/{id:[0-9]+}', 'ItemController:put')->setName('put_item');
+    $this->delete('/{id:[0-9]+}', 'ItemController:delete')->setName('delete_item');
 });

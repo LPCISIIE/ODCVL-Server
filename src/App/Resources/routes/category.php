@@ -1,8 +1,9 @@
 <?php
 
 $app->group('/categories', function () {
-    $this->map(['GET', 'POST'], '/add', 'CategoryController:add')->setName('category.add');
-    $this->map(['GET', 'POST'], '/{id:[0-9]+}/edit', 'CategoryController:edit')->setName('category.edit');
-    $this->get('/{id:[0-9]+}/delete', 'CategoryController:delete')->setName('category.delete');
-    $this->get('', 'CategoryController:get')->setName('category.get');
+    $this->get('', 'CategoryController:getCollection')->setName('get_categories');
+    $this->get('/{id:[0-9]+}', 'CategoryController:get')->setName('get_category');
+    $this->post('', 'CategoryController:post')->setName('post_category');
+    $this->put('/{id:[0-9]+}', 'CategoryController:put')->setName('put_category');
+    $this->delete('/{id:[0-9]+}', 'CategoryController:delete')->setName('delete_category');
 });
