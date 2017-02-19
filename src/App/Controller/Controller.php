@@ -40,6 +40,7 @@ class Controller
     {
         die('<pre>' . print_r($data, true) . '</pre>');
     }
+
     /**
      * Get request params
      *
