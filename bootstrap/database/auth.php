@@ -19,6 +19,13 @@ Manager::schema()->create('user', function (Blueprint $table) {
     $table->timestamps();
 });
 
+Manager::schema()->create('access_token', function (Blueprint $table) {
+    $table->increments('id');
+    $table->integer('user_id')->unsigned();
+    $table->string('token')->unique();
+    $table->foreign('user_id')->references('id')->on('user');
+});
+
 Manager::schema()->create('activations', function (Blueprint $table) {
     $table->increments('id');
     $table->integer('user_id')->unsigned();

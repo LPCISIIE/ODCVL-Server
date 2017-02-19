@@ -4,8 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2b5cbef33681c3b14e95bc2615a69bc7",
-    "content-hash": "b2b38ccbdbd2e3333349dd32967087ae",
+    "content-hash": "b35257c98c39fd3fa47574fc3f9ad733",
     "packages": [
         {
             "name": "awurth/slim-validation",
@@ -51,7 +50,7 @@
                 "slim",
                 "validation"
             ],
-            "time": "2017-01-09 13:59:15"
+            "time": "2017-01-09T13:59:15+00:00"
         },
         {
             "name": "cartalyst/sentinel",
@@ -121,7 +120,7 @@
                 "php",
                 "security"
             ],
-            "time": "2016-09-05 15:16:16"
+            "time": "2016-09-05T15:16:16+00:00"
         },
         {
             "name": "cartalyst/support",
@@ -190,7 +189,7 @@
                 "laravel",
                 "support"
             ],
-            "time": "2016-06-21 04:08:43"
+            "time": "2016-06-21T04:08:43+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -217,7 +216,7 @@
                 "MIT"
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
-            "time": "2014-12-30 15:22:37"
+            "time": "2014-12-30T15:22:37+00:00"
         },
         {
             "name": "doctrine/inflector",
@@ -284,7 +283,50 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06 14:35:42"
+            "time": "2015-11-06T14:35:42+00:00"
+        },
+        {
+            "name": "firebase/php-jwt",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2016-07-18T04:51:16+00:00"
         },
         {
             "name": "illuminate/container",
@@ -327,7 +369,7 @@
             ],
             "description": "The Illuminate Container package.",
             "homepage": "https://laravel.com",
-            "time": "2016-10-02 01:14:30"
+            "time": "2016-10-02T01:14:30+00:00"
         },
         {
             "name": "illuminate/contracts",
@@ -369,7 +411,7 @@
             ],
             "description": "The Illuminate Contracts package.",
             "homepage": "https://laravel.com",
-            "time": "2016-09-26 20:36:27"
+            "time": "2016-09-26T20:36:27+00:00"
         },
         {
             "name": "illuminate/database",
@@ -429,7 +471,7 @@
                 "orm",
                 "sql"
             ],
-            "time": "2016-11-14 15:37:58"
+            "time": "2016-11-14T15:37:58+00:00"
         },
         {
             "name": "illuminate/events",
@@ -474,7 +516,7 @@
             ],
             "description": "The Illuminate Events package.",
             "homepage": "https://laravel.com",
-            "time": "2016-08-12 14:24:30"
+            "time": "2016-08-12T14:24:30+00:00"
         },
         {
             "name": "illuminate/support",
@@ -531,7 +573,58 @@
             ],
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
-            "time": "2016-11-03 15:25:28"
+            "time": "2016-11-03T15:25:28+00:00"
+        },
+        {
+            "name": "incenteev/composer-parameter-handler",
+            "version": "v2.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Incenteev/ParameterHandler.git",
+                "reference": "d7ce7f06136109e81d1cb9d57066c4d4a99cf1cc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Incenteev/ParameterHandler/zipball/d7ce7f06136109e81d1cb9d57066c4d4a99cf1cc",
+                "reference": "d7ce7f06136109e81d1cb9d57066c4d4a99cf1cc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3",
+                "symfony/yaml": "~2.3|~3.0"
+            },
+            "require-dev": {
+                "composer/composer": "1.0.*@dev",
+                "phpspec/prophecy-phpunit": "~1.0",
+                "symfony/filesystem": "~2.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Incenteev\\ParameterHandler\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christophe Coevoet",
+                    "email": "stof@notk.org"
+                }
+            ],
+            "description": "Composer script handling your ignored parameter file",
+            "homepage": "https://github.com/Incenteev/ParameterHandler",
+            "keywords": [
+                "parameters management"
+            ],
+            "time": "2015-11-10T17:04:01+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -584,7 +677,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2017-01-16 07:55:07"
+            "time": "2017-01-16T07:55:07+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -627,7 +720,7 @@
                 "router",
                 "routing"
             ],
-            "time": "2016-10-20 17:36:47"
+            "time": "2016-10-20T17:36:47+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -675,7 +768,7 @@
                 "pseudorandom",
                 "random"
             ],
-            "time": "2016-11-07 23:38:38"
+            "time": "2016-11-07T23:38:38+00:00"
         },
         {
             "name": "pimple/pimple",
@@ -721,7 +814,7 @@
                 "container",
                 "dependency injection"
             ],
-            "time": "2015-09-11 15:10:35"
+            "time": "2015-09-11T15:10:35+00:00"
         },
         {
             "name": "psr/http-message",
@@ -771,7 +864,7 @@
                 "request",
                 "response"
             ],
-            "time": "2016-08-06 14:39:51"
+            "time": "2016-08-06T14:39:51+00:00"
         },
         {
             "name": "respect/validation",
@@ -836,7 +929,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2016-10-29 13:29:17"
+            "time": "2016-10-29T13:29:17+00:00"
         },
         {
             "name": "slim/csrf",
@@ -886,7 +979,7 @@
                 "middleware",
                 "slim"
             ],
-            "time": "2016-12-20 20:45:43"
+            "time": "2016-12-20T20:45:43+00:00"
         },
         {
             "name": "slim/flash",
@@ -934,7 +1027,7 @@
                 "provider",
                 "slim"
             ],
-            "time": "2016-11-11 16:29:19"
+            "time": "2016-11-11T16:29:19+00:00"
         },
         {
             "name": "slim/slim",
@@ -1004,7 +1097,7 @@
                 "micro",
                 "router"
             ],
-            "time": "2016-12-20 20:30:47"
+            "time": "2016-12-20T20:30:47+00:00"
         },
         {
             "name": "slim/twig-view",
@@ -1054,7 +1147,7 @@
                 "twig",
                 "view"
             ],
-            "time": "2016-03-13 20:58:41"
+            "time": "2016-03-13T20:58:41+00:00"
         },
         {
             "name": "symfony/http-foundation",
@@ -1107,7 +1200,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-08 20:47:33"
+            "time": "2017-01-08T20:47:33+00:00"
         },
         {
             "name": "symfony/polyfill-mbstring",
@@ -1166,7 +1259,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-11-14 01:06:16"
+            "time": "2016-11-14T01:06:16+00:00"
         },
         {
             "name": "symfony/translation",
@@ -1230,7 +1323,62 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2017-01-02 20:32:22"
+            "time": "2017-01-02T20:32:22+00:00"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "v3.2.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "reference": "9724c684646fcb5387d579b4bfaa63ee0b0c64c8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "symfony/console": "~2.8|~3.0"
+            },
+            "suggest": {
+                "symfony/console": "For validating YAML files using the lint command"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Yaml\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "https://symfony.com",
+            "time": "2017-02-16T22:46:52+00:00"
         },
         {
             "name": "twig/twig",
@@ -1291,7 +1439,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2017-01-11 19:36:15"
+            "time": "2017-01-11T19:36:15+00:00"
         }
     ],
     "packages-dev": [],

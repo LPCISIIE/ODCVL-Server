@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Service\JWTManager;
 use Awurth\Slim\Validation\Validator;
 use Cartalyst\Sentinel\Sentinel;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -9,13 +10,12 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Interop\Container\ContainerInterface;
 use Slim\Exception\NotFoundException;
 use Slim\Router;
-use Slim\Views\Twig;
 
 /**
- * @property Twig view
  * @property Router router
  * @property Validator validator
- * @property Sentinel auth
+ * @property Sentinel sentinel
+ * @property JWTManager jwt
  */
 class Controller
 {
