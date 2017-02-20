@@ -65,10 +65,12 @@ class ProductController extends Controller
             ]
         ]);
 
-        $category = Category::find($request->getParam('category_id'));
+        if ($request->getParam('category_id')) {
+            $category = Category::find($request->getParam('category_id'));
 
-        if ($request->getParam('category_id') && null === $category) {
-            $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            if (null === $category) {
+                $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            }
         }
 
         if ($this->validator->isValid()) {
@@ -118,10 +120,12 @@ class ProductController extends Controller
             ]
         ]);
 
-        $category = Category::find($request->getParam('category_id'));
+        if ($request->getParam('category_id')) {
+            $category = Category::find($request->getParam('category_id'));
 
-        if ($request->getParam('category_id') && null === $category) {
-            $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            if (null === $category) {
+                $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            }
         }
 
         if ($this->validator->isValid()) {

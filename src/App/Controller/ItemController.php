@@ -51,23 +51,38 @@ class ItemController extends Controller
     public function post(Request $request, Response $response)
     {
         $this->validator->validate($request, [
-            'code' => V::notBlank()->alnum(),
-            'purchased_at' => V::notBlank()->date('d/m/Y'),
-            'product_id' => V::notBlank()
-        ], [
-            'notBlank' => 'Ce champ est requis',
-            'alnum' => 'Le code ne peut contenir que des lettres et des chiffres',
-            'date' => '{{name}} n\'est pas une date valide'
+            'code' => [
+                'rules' => V::notBlank()->alnum(),
+                'messages' => [
+                    'notBlank' => 'Le code barre est requis',
+                    'alnum' => 'Le code ne peut contenir que des lettres et des chiffres'
+                ]
+            ],
+            'purchased_at' => [
+                'rules' => V::notBlank()->date('d/m/Y'),
+                'messages' => [
+                    'notBlank' => 'Veuillez préciser la date d\'achat',
+                    'date' => '{{name}} n\'est pas une date valide'
+                ]
+            ],
+            'product_id' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Le matériel est requis'
+                ]
+            ]
         ]);
 
         if (Item::where('code', $request->getParam('code'))->first()) {
             $this->validator->addError('code', 'Ce code existe déjà');
         }
 
-        $product = Product::find($request->getParam('product_id'));
+        if ($request->getParam('product_id')) {
+            $product = Product::find($request->getParam('product_id'));
 
-        if (null === $product) {
-            $this->validator->addError('product_id', 'Produit inconnu');
+            if (null === $product) {
+                $this->validator->addError('product_id', 'Matériel inconnu');
+            }
         }
 
         if ($this->validator->isValid()) {
@@ -103,17 +118,27 @@ class ItemController extends Controller
         }
 
         $this->validator->validate($request, [
-            'purchased_at' => V::notBlank()->date('d/m/Y'),
-            'product_id' => V::notBlank()
-        ], [
-            'notBlank' => 'Ce champ est requis',
-            'date' => '{{name}} n\'est pas une date valide'
+            'purchased_at' => [
+                'rules' => V::notBlank()->date('d/m/Y'),
+                'messages' => [
+                    'notBlank' => 'Veuillez préciser la date d\'achat',
+                    'date' => '{{name}} n\'est pas une date valide'
+                ]
+            ],
+            'product_id' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Le matériel est requis'
+                ]
+            ]
         ]);
 
-        $product = Product::find($request->getParam('product_id'));
+        if ($request->getParam('product_id')) {
+            $product = Product::find($request->getParam('product_id'));
 
-        if (null === $product) {
-            $this->validator->addError('product_id', 'Produit inconnu');
+            if (null === $product) {
+                $this->validator->addError('product_id', 'Matériel inconnu');
+            }
         }
 
         if ($this->validator->isValid()) {
