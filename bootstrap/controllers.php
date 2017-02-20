@@ -15,7 +15,3 @@ $container['ProductController'] = function ($container) {
 $container['ItemController'] = function ($container) {
     return new App\Controller\ItemController($container);
 };
-
-$container['PropertyController'] = function ($container) {
-    return new App\Controller\PropertyController($container);
-};
