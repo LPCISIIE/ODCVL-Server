@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function get(Request $request, Response $response, $id)
     {
-        $product = Product::find($id);
+        $product = Product::with('categories')->find($id);
 
         if (null === $product) {
             throw $this->notFoundException($request, $response);
