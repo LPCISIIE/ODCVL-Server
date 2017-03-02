@@ -1,12 +1,16 @@
 config:
     settings:
+        # When enabled, displays Exception name and stack trace
+        # Set to false in production to display 500 Internal Server Error
         displayErrorDetails: true
     cors:
-        origin:  '*'
-        headers: 'X-Requested-With, Content-Type, Accept, Origin, Authorization'
-        methods: 'GET, POST, PUT, PATCH, DELETE'
-        max_age: 3600
+        origin:         '*'
+        allow_headers:  'X-Requested-With, Content-Type, Accept, Origin, Authorization'
+        expose_headers: 'Location'
+        methods:        'GET, POST, PUT, PATCH, DELETE'
+        max_age:        3600
     jwt:
+        # The server name used to encrypt access tokens and refresh tokens
         server_name:    localhost
-        access_token_lifetime: 3600
-        refresh_token_lifetime: 1209600
+        access_token_lifetime: 3600 # seconds (1h)
+        refresh_token_lifetime: 1209600 # seconds (14 days)
