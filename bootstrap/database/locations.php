@@ -22,8 +22,8 @@ Manager::schema()->create('location_item', function (Blueprint $table) {
 });
 Manager::schema()->create('client', function (Blueprint $table) {
 $table->increments('id');
-$table->string('last_name')->nullable();
-$table->string('first_name')->nullable();
+$table->string('nom')->nullable();
+$table->string('prenom')->nullable();
 $table->string('organisme')->nullable();
 $table->string('adresse')->nullable();
 $table->string('telephone')->nullable();

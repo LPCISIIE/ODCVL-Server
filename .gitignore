@@ -3,3 +3,4 @@ vendor/
 bootstrap/parameters.yml
 .idea/
 composer.lock
+cache/
