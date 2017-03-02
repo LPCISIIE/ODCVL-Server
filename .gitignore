@@ -1,5 +1,3 @@
-vendor
-cache/*
-!cache/.gitkeep
-*.css.map
-bootstrap/db.php
+composer.phar
+vendor/
+bootstrap/parameters.yml

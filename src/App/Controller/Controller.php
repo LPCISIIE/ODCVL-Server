@@ -2,20 +2,22 @@
 
 namespace App\Controller;
 
-use Awurth\Slim\Validation\Validator;
+use App\Model\User;
+use App\Service\JWTManager;
+use Awurth\Slim\Rest\Validation\Validator;
 use Cartalyst\Sentinel\Sentinel;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Interop\Container\ContainerInterface;
 use Slim\Exception\NotFoundException;
+use App\Exception\AccessDeniedException;
 use Slim\Router;
-use Slim\Views\Twig;
 
 /**
- * @property Twig view
  * @property Router router
  * @property Validator validator
- * @property Sentinel auth
+ * @property Sentinel sentinel
+ * @property JWTManager jwt
  */
 class Controller
 {
@@ -32,6 +34,33 @@ class Controller
     }
 
     /**
+     * Get current authenticated user
+     *
+     * @return User|null
+     */
+    public function getUser()
+    {
+        $token = $this->jwt->getAccessToken();
+
+        return $token ? $token->user : null;
+    }
+
+    /**
+     * Throw an AccessDeniedException if user doesn't have the required role
+     *
+     * @param string $role
+     * @throws AccessDeniedException
+     */
+    public function requireRole($role)
+    {
+        $user = $this->getUser();
+
+        if (null === $user || !$user->inRole($role)) {
+            throw $this->accessDeniedException('Access denied: User must have role ' . $role);
+        }
+    }
+
+    /**
      * Stop the script and print info about a variable
      *
      * @param mixed $data
@@ -40,6 +69,7 @@ class Controller
     {
         die('<pre>' . print_r($data, true) . '</pre>');
     }
+
     /**
      * Get request params
      *
@@ -165,6 +195,17 @@ class Controller
     public function notFoundException(Request $request, Response $response)
     {
         return new NotFoundException($request, $response);
+    }
+
+    /**
+     * Create new AccessDeniedException
+     *
+     * @param string $message
+     * @return AccessDeniedException
+     */
+    public function accessDeniedException($message = "Access denied")
+    {
+        return new AccessDeniedException($message);
     }
 
     public function __get($property)

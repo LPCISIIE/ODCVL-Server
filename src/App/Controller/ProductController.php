@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Product::all());
+        return $this->ok($response, Product::with('categories')->get());
     }
 
     /**
@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function get(Request $request, Response $response, $id)
     {
-        $product = Product::find($id);
+        $product = Product::with('categories')->find($id);
 
         if (null === $product) {
             throw $this->notFoundException($request, $response);
@@ -50,18 +50,27 @@ class ProductController extends Controller
      */
     public function post(Request $request, Response $response)
     {
-        $this->validator->validate($request, ['name' => V::notBlank()], [
-            'notBlank' => 'Veuillez donner un nom au produit'
+        $this->validator->validate($request, [
+            'name' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Veuillez donner un nom au produit'
+                ]
+            ],
+            'category_id' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Veuillez sélectionner une catégorie'
+                ]
+            ]
         ]);
 
-        $this->validator->validate($request, ['category_id' => V::notBlank()], [
-            'notBlank' => 'Veuillez sélectionner une catégorie'
-        ]);
+        if ($request->getParam('category_id')) {
+            $category = Category::find($request->getParam('category_id'));
 
-        $category = Category::find($request->getParam('category_id'));
-
-        if (null === $category) {
-            $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            if (null === $category) {
+                $this->validator->addError('category_id', 'La catégorie n\'existe pas');
+            }
         }
 
         if ($this->validator->isValid()) {
@@ -96,25 +105,36 @@ class ProductController extends Controller
             throw $this->notFoundException($request, $response);
         }
 
-        if ($request->isPost()) {
-            $this->validator->validate($request, ['name' => V::notBlank()], [
-                'notBlank' => 'Veuillez donner un nom au produit'
-            ]);
+        $this->validator->validate($request, [
+            'name' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Veuillez donner un nom au produit'
+                ]
+            ],
+            'category_id' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Veuillez sélectionner une catégorie'
+                ]
+            ]
+        ]);
 
+        if ($request->getParam('category_id')) {
             $category = Category::find($request->getParam('category_id'));
 
             if (null === $category) {
                 $this->validator->addError('category_id', 'La catégorie n\'existe pas');
             }
+        }
 
-            if ($this->validator->isValid()) {
-                $product->name = $request->getParam('name');
-                $product->save();
+        if ($this->validator->isValid()) {
+            $product->name = $request->getParam('name');
+            $product->save();
 
-                $product->categories()->sync([$category->id]);
+            $product->categories()->sync([$category->id]);
 
-                return $this->noContent($response);
-            }
+            return $this->noContent($response);
         }
 
         return $this->validationErrors($response);

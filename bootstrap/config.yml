@@ -1,0 +1,12 @@
+config:
+    settings:
+        displayErrorDetails: true
+    cors:
+        origin:  '*'
+        headers: 'X-Requested-With, Content-Type, Accept, Origin, Authorization'
+        methods: 'GET, POST, PUT, PATCH, DELETE'
+        max_age: 3600
+    jwt:
+        server_name:    localhost
+        access_token_lifetime: 3600
+        refresh_token_lifetime: 1209600

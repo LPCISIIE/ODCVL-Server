@@ -2,20 +2,19 @@
 
 namespace App\Middleware;
 
+use App\Service\JWTManager;
 use Interop\Container\ContainerInterface;
-
 use Cartalyst\Sentinel\Sentinel;
-use Slim\Flash\Messages;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Slim\Router;
-use Slim\Views\Twig;
 
 /**
- * @property Twig view
  * @property Router router
- * @property Messages flash
- * @property Sentinel auth
+ * @property Sentinel sentinel
+ * @property JWTManager jwt
  */
-class Middleware
+abstract class Middleware
 {
     /**
      * Slim application container
@@ -28,6 +27,8 @@ class Middleware
     {
         $this->container = $container;
     }
+
+    public abstract function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next);
 
     public function __get($property)
     {

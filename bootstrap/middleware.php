@@ -1,4 +1,4 @@
 <?php
 
-// $app->add(new \App\Middleware\CsrfMiddleware($container));
-// $app->add(new \Slim\Csrf\Guard());
+$app->add(new App\Middleware\JWTMiddleware($container));
+$app->add(new App\Middleware\CORSMiddleware($container));
