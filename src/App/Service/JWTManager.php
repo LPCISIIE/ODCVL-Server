@@ -8,6 +8,7 @@ use App\Model\User;
 use Cartalyst\Sentinel\Users\UserInterface;
 use Firebase\JWT\ExpiredException;
 use Firebase\JWT\JWT;
+use Illuminate\Database\QueryException;
 
 class JWTManager
 {
@@ -23,6 +24,11 @@ class JWTManager
      * @var int
      */
     private $accessTokenLifetime;
+
+    /**
+     * @var int
+     */
+    private $refreshTokenLifetime;
 
     /**
      * @var string
@@ -139,7 +145,10 @@ class JWTManager
             ]);
 
             $accessToken->user()->associate($user);
-            $accessToken->save();
+            try {
+                $accessToken->save();
+            } catch (QueryException $e) {
+            }
         }
 
         return $token;
@@ -180,7 +189,10 @@ class JWTManager
             ]);
 
             $refreshToken->user()->associate($user);
-            $refreshToken->save();
+            try {
+                $refreshToken->save();
+            } catch (QueryException $e) {
+            }
         }
 
         return $token;
@@ -206,6 +218,36 @@ class JWTManager
     }
 
     /**
+     * Set server name
+     *
+     * @param string $name
+     */
+    public function setServerName($name)
+    {
+        $this->serverName = $name;
+    }
+
+    /**
+     * Get server name
+     *
+     * @return string
+     */
+    public function getServerName()
+    {
+        return $this->serverName;
+    }
+
+    /**
+     * Set Access Token lifetime
+     *
+     * @param int $lifetime
+     */
+    public function setAccessTokenLifetime($lifetime)
+    {
+        $this->accessTokenLifetime = $lifetime;
+    }
+
+    /**
      * Get Access Token lifetime
      *
      * @return int
@@ -216,6 +258,16 @@ class JWTManager
     }
 
     /**
+     * Set Refresh Token lifetime
+     *
+     * @param int $lifetime
+     */
+    public function setRefreshTokenLifetime($lifetime)
+    {
+        $this->refreshTokenLifetime = $lifetime;
+    }
+
+    /**
      * Get Refresh Token lifetime
      *
      * @return int
@@ -223,6 +275,16 @@ class JWTManager
     public function getRefreshTokenLifetime()
     {
         return $this->refreshTokenLifetime;
+    }
+
+    /**
+     * Set Access Token
+     *
+     * @param AccessToken $accessToken
+     */
+    public function setAccessToken(AccessToken $accessToken)
+    {
+        $this->accessToken = $accessToken;
     }
 
     /**
