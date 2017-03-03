@@ -16,5 +16,5 @@ require __DIR__ . '/database/drop.php';
 
 require __DIR__ . '/database/auth.php';
 require __DIR__ . '/database/stock.php';
-
+require __DIR__ . '/database/locations.php';
 require __DIR__ . '/database/fixtures.php';

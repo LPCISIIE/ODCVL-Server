@@ -13,7 +13,10 @@ Manager::schema()->dropIfExists('refresh_token');
 Manager::schema()->dropIfExists('user');
 
 Manager::schema()->dropIfExists('category_product');
-
+Manager::schema()->dropIfExists('location_item');
 Manager::schema()->dropIfExists('item');
 Manager::schema()->dropIfExists('category');
 Manager::schema()->dropIfExists('product');
+Manager::schema()->dropIfExists('location');
+Manager::schema()->dropIfExists('client');
+
