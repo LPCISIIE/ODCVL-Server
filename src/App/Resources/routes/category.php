@@ -6,4 +6,6 @@ $app->group('/categories', function () {
     $this->post('', 'CategoryController:post')->setName('post_category');
     $this->put('/{id:[0-9]+}', 'CategoryController:put')->setName('put_category');
     $this->delete('/{id:[0-9]+}', 'CategoryController:delete')->setName('delete_category');
+
+    $this->get('/{id:[0-9]+}/products', 'CategoryController:getCategoryProducts')->setName('get_category_products');
 });
