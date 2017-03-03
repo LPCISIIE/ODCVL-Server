@@ -158,4 +158,22 @@ class CategoryController extends Controller
 
         return $this->noContent($response);
     }
+
+    public function getCategoryProducts(Request $request, Response $response, $id)
+    {
+        $category = Category::with(['products.categories', 'subCategories.products.categories'])->find($id);
+
+        if (null === $category) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        $category = $category->toArray();
+
+        $products = $category['products'];
+        foreach ($category['sub_categories'] as $subCategory) {
+            $products = array_merge($products, $subCategory['products']);
+        }
+
+        return $this->ok($response, $products);
+    }
 }
