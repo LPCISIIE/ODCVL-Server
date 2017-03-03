@@ -1,5 +1,9 @@
 <?php
 
+use App\Model\Category;
+use App\Model\Product;
+use App\Model\Item;
+
 $categories = [
     'Chaussure' => [
         'Chaussure de ski',
@@ -26,38 +30,29 @@ $products = [
     'ALLTRACK 120 ROSSIGNOL'
 ];
 
-/* $properties = [
-    'Pointure',
-    'Diamètre des roues',
-    'Taille'
-]; */
-
 $items = [
     [
         'code' => 'BHVHV45',
-        'product' => 1,
-        // 'pointure' => 42
+        'product' => 1
     ],
     [
         'code' => 'IKNBG78',
-        'product' => 2,
-        // 'pointure' => 39
+        'product' => 2
     ],
     [
         'code' => 'FPHOI88',
-        'product' => 1,
-        // 'pointure' => 43
+        'product' => 1
     ],
 ];
 
 foreach ($categories as $category => $subCategories) {
-    $c = new \App\Model\Category([
+    $c = new Category([
         'name' => $category
     ]);
     $c->save();
 
     foreach ($subCategories as $subCategory) {
-        $sub = new \App\Model\Category([
+        $sub = new Category([
             'name' => $subCategory
         ]);
         $sub->parent()->associate($c);
@@ -66,7 +61,7 @@ foreach ($categories as $category => $subCategories) {
 }
 
 foreach ($products as $product) {
-    $p = new \App\Model\Product([
+    $p = new Product([
         'name' => $product
     ]);
     $p->save();
@@ -74,20 +69,11 @@ foreach ($products as $product) {
     $p->categories()->attach(2);
 }
 
-/* foreach ($properties as $property) {
-    $p = new \App\Model\Property([
-        'name' => $property
-    ]);
-    $p->save();
-} */
-
 foreach ($items as $item) {
-    $i = new \App\Model\Item([
+    $i = new Item([
         'code' => $item['code'],
         'purchased_at' => new \DateTime()
     ]);
     $i->product()->associate($item['product']);
     $i->save();
-
-    // $i->properties()->attach(1, ['value' => $item['pointure']]);
 }

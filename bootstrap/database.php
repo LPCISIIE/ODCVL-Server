@@ -12,9 +12,13 @@ $capsule->addConnection($parameters['eloquent']);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
+// Remove all tables
 require __DIR__ . '/database/drop.php';
 
+// Create tables
 require __DIR__ . '/database/auth.php';
 require __DIR__ . '/database/stock.php';
 require __DIR__ . '/database/locations.php';
+
+// Save mock data
 require __DIR__ . '/database/fixtures.php';

@@ -12,14 +12,11 @@ class Client extends Model
 
     public $timestamps = false;
 
-    protected $fillable=[
-
+    protected $fillable = [
         'nom',
         'prenom',
         'organisme',
         'adresse',
         'email'
     ];
-
-
 }

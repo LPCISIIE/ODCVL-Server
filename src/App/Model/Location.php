@@ -12,11 +12,8 @@ class Location extends Model
 
     public $timestamps = false;
 
-    protected $fillable=[
-
+    protected $fillable = [
         'date_debut',
         'date_fin'
     ];
-
-
 }
