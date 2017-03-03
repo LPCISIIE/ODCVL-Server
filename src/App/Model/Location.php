@@ -10,10 +10,17 @@ class Location extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'date_debut',
         'date_fin'
     ];
+
+    /** Get Location items*/ 
+    public function items() 
+    { 
+    	return $this->belongsToMany('App\Model\Item'); 
+    }
+
+
+
 }
