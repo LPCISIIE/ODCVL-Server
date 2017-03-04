@@ -3,6 +3,7 @@
 use App\Model\Category;
 use App\Model\Product;
 use App\Model\Item;
+use App\Model\Location;
 
 $categories = [
     'Chaussure' => [
@@ -45,6 +46,38 @@ $items = [
     ],
 ];
 
+
+$locations = [
+    [
+        'date_debut' => '2017-03-09',
+        'date_fin' => '2017-03-09',
+        'client_id' => 1
+    ],
+    [
+        'date_debut' => '2017-03-09',
+        'date_fin' => '2017-03-09',
+        'client_id' => 1
+    ],
+    [
+        'date_debut' => '2017-03-09',
+        'date_fin' => '2017-03-09',
+        'client_id' => 2
+    ],
+];
+
+
+$clients = [
+    [
+        'nom' => 'test_nom',
+        'prenom' => 'test_prenom'
+    ],
+    [
+        'nom' => 'test_nom2',
+        'prenom' => 'test_prenom2'
+    ]
+];
+
+
 foreach ($categories as $category => $subCategories) {
     $c = new Category([
         'name' => $category
@@ -77,3 +110,15 @@ foreach ($items as $item) {
     $i->product()->associate($item['product']);
     $i->save();
 }
+
+/**
+foreach ($locations as $location) {
+    $l = new Location([
+        'date_debut' => $location['date_debut'],
+        'date_fin' => $location['date_fin'],
+        'client_id' => $location['client_id'],
+    ]);
+
+    $l->save();
+}
+*//

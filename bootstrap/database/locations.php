@@ -16,6 +16,7 @@ Manager::schema()->create('location', function (Blueprint $table) {
     $table->increments('id');
     $table->date('date_debut');
     $table->date('date_fin');
+    $table->unsignedsmallInteger('status')->default(0);
     $table->unsignedInteger('client_id');
     $table->foreign('client_id')->references('id')->on('client');
 });
@@ -24,6 +25,6 @@ Manager::schema()->create('location_item', function (Blueprint $table) {
     $table->increments('id');
     $table->unsignedInteger('location_id');
     $table->unsignedInteger('item_id');
-    $table->foreign('location_id')->references('id')->on('location');
-    $table->foreign('item_id')->references('id')->on('item');
+    $table->foreign('location_id')->references('id')->on('location')->onDelete('cascade');;
+    $table->foreign('item_id')->references('id')->on('item')->onDelete('cascade');
 });
