@@ -10,8 +10,6 @@ require $dir . 'auth.php';
 require $dir . 'category.php';
 require $dir . 'product.php';
 require $dir . 'item.php';
-<<<<<<< HEAD
 require $dir . 'location.php';
-=======
 require $dir . 'client.php';
->>>>>>> master
+
