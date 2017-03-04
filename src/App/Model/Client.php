@@ -17,6 +17,7 @@ class Client extends Model
         'prenom',
         'organisme',
         'adresse',
+        'telephone',
         'email'
     ];
 
