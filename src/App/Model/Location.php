@@ -13,7 +13,8 @@ class Location extends Model
     protected $fillable = [
         'date_debut',
         'date_fin',
-        'status'
+        'status',
+        'client_id'
     ];
 
     /** Get Location items*/ 

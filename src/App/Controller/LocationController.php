@@ -23,7 +23,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Get one item
+     * Get one Locaiton
      *
      * @param Request $request
      * @param Response $response
@@ -39,6 +39,27 @@ class LocationController extends Controller
         }
 
         return $this->ok($response, $location);
+    }
+
+     /**
+     * Delete location
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     */
+    public function delete(Request $request, Response $response, $id)
+    {
+        $location = Location::find($id);
+
+        if (null === $location) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        $location->delete();
+
+        return $this->noContent($response);
     }
 
   
