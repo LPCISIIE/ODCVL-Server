@@ -24,6 +24,6 @@ class Client extends Model
 
     public function locations()
     {
-        return $this->belongsTo('App\Model\Location');
+        return $this->hasMany('App\Model\Location');
     }
 }

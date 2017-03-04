@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\Location;
 use App\Model\Item;
+use App\Model\Client;
 use Respect\Validation\Validator as V;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -19,7 +20,7 @@ class LocationController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Location::get());
+        return $this->ok($response, Location::with('client')->get());
     }
 
     /**
@@ -122,23 +123,23 @@ class LocationController extends Controller
             }
         }
 
-/**        if ($request->getParam('client_id')) {
+        if ($request->getParam('client_id')) {
             $client = Client::find($request->getParam('client_id'));
 
             if (null === $client) {
                 $this->validator->addError('client_id', 'Client inconnu');
             }
-        }*/
+        }
 
         if ( $this->validator->isValid()) {
             $location = new Location([
             'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
-            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin')),
-            'client_id' => 1
+            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
+            //'client_id' => 1
             ]);
 
-            $location->save();
-            //$location->client()->associate($client);
+            $location->client()->associate($client);
+             $location->save();
             $location->items()->attach($arr_items);
 
             return $this->created($response, 'get_location', [
