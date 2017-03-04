@@ -19,4 +19,9 @@ class Item extends Model
     {
         return $this->belongsTo('App\Model\Product');
     }
+
+    public function location()
+    {
+        return $this->belongsToMany('App\Model\Location'); 
+    }
 }

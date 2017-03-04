@@ -16,12 +16,14 @@ Manager::schema()->create('location', function (Blueprint $table) {
     $table->increments('id');
     $table->date('date_debut');
     $table->date('date_fin');
+    $table->date('created_at');
+    $table->date('updated_at');
     $table->unsignedsmallInteger('status')->default(0);
     $table->unsignedInteger('client_id');
     $table->foreign('client_id')->references('id')->on('client');
 });
 
-Manager::schema()->create('location_item', function (Blueprint $table) {
+Manager::schema()->create('item_location', function (Blueprint $table) {
     $table->increments('id');
     $table->unsignedInteger('location_id');
     $table->unsignedInteger('item_id');
