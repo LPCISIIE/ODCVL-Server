@@ -24,9 +24,9 @@ class Location extends Model
     	return $this->belongsToMany('App\Model\Item'); 
     }
 
-    public function clients()
+    public function client()
     {
-        return $this->hasMany('App\Model\Clients');
+        return $this->belongsTo('App\Model\Client');
     }
     
 }
