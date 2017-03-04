@@ -19,4 +19,10 @@ class Client extends Model
         'adresse',
         'email'
     ];
+
+
+    public function locations()
+    {
+        return $this->belongsTo('App\Model\Location');
+    }
 }
