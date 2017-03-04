@@ -17,12 +17,16 @@ class Location extends Model
         'client_id'
     ];
 
+
     /** Get Location items*/ 
     public function items() 
     { 
     	return $this->belongsToMany('App\Model\Item'); 
     }
 
-
-
+    public function clients()
+    {
+        return $this->hasMany('App\Model\Clients');
+    }
+    
 }
