@@ -4,6 +4,7 @@ use App\Model\Category;
 use App\Model\Product;
 use App\Model\Item;
 use App\Model\Location;
+use App\Model\Client;
 
 $categories = [
     'Chaussure' => [
@@ -47,35 +48,46 @@ $items = [
 ];
 
 
+$clients = [
+    [
+        'nom' => 'zakaria',
+        'prenom' => 'elouarchi',
+        'organisme' => 'UNIV LORRAINE',
+        'adresse' => '17 rue du sangl',
+        'telephone' => '0767767867',
+        'email' => 're@gmail.com'
+    ],
+    [
+        'nom' => 'kamel',
+        'prenom' => 'remaki',
+        'organisme' => 'IUT nancy',
+        'adresse' => '8 rue aristid briand',
+        'telephone' => '0667767867',
+        'email' => 'kamel@gmail.com'
+    ],
+];
+
 $locations = [
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
+        'status' => 0,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
+        'status' => 0,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
+        'status' => 0,
         'client_id' => 2
     ],
 ];
 
-
-$clients = [
-    [
-        'nom' => 'test_nom',
-        'prenom' => 'test_prenom'
-    ],
-    [
-        'nom' => 'test_nom2',
-        'prenom' => 'test_prenom2'
-    ]
-];
 
 
 foreach ($categories as $category => $subCategories) {
@@ -111,14 +123,20 @@ foreach ($items as $item) {
     $i->save();
 }
 
-/**
+foreach ($clients as $client) {
+    $cl = new client($client);
+    $cl->save();
+}
+
+
 foreach ($locations as $location) {
     $l = new Location([
         'date_debut' => $location['date_debut'],
         'date_fin' => $location['date_fin'],
-        'client_id' => $location['client_id'],
+        'status' => $location['status']
     ]);
 
+    $l->client()->associate($location['client_id']);
     $l->save();
+    $l->items()->attach([1,2]);
 }
-*//
