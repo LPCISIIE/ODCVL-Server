@@ -16,4 +16,9 @@ class Location extends Model
         'date_debut',
         'date_fin'
     ];
+
+    public function clients()
+    {
+        return $this->hasMany('App\Model\Clients');
+    }
 }

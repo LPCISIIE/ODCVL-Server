@@ -15,3 +15,6 @@ $container['ProductController'] = function ($container) {
 $container['ItemController'] = function ($container) {
     return new App\Controller\ItemController($container);
 };
+$container['ClientController'] = function ($container) {
+    return new App\Controller\ClientController($container);
+};

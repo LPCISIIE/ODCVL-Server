@@ -21,9 +21,9 @@ Manager::schema()->create('location', function (Blueprint $table) {
 });
 
 Manager::schema()->create('location_item', function (Blueprint $table) {
+    $table->increments('id');
     $table->unsignedInteger('location_id');
     $table->unsignedInteger('item_id');
-    $table->primary(['location_id', 'item_id']);
     $table->foreign('location_id')->references('id')->on('location');
     $table->foreign('item_id')->references('id')->on('item');
 });

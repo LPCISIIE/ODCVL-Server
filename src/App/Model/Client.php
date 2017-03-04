@@ -17,6 +17,13 @@ class Client extends Model
         'prenom',
         'organisme',
         'adresse',
+        'telephone',
         'email'
     ];
+
+
+    public function locations()
+    {
+        return $this->belongsTo('App\Model\Location');
+    }
 }
