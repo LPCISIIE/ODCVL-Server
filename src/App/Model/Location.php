@@ -10,11 +10,12 @@ class Location extends Model
 
     protected $primaryKey = 'id';
 
+    protected $hidden = array('client_id');
+
     protected $fillable = [
         'date_debut',
         'date_fin',
-        'status',
-        'client_id'
+        'status'
     ];
 
 
