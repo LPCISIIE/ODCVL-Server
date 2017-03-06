@@ -118,6 +118,13 @@ class ItemController extends Controller
         }
 
         $this->validator->validate($request, [
+            'code' => [
+                'rules' => V::notBlank()->alnum(),
+                'messages' => [
+                    'notBlank' => 'Le code barre est requis',
+                    'alnum' => 'Le code ne peut contenir que des lettres et des chiffres'
+                ]
+            ],
             'purchased_at' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
@@ -142,6 +149,7 @@ class ItemController extends Controller
         }
 
         if ($this->validator->isValid()) {
+            $item->code = $request->getParam('code');
             $item->purchased_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('purchased_at'));
             $item->product()->associate($product);
             $item->save();
