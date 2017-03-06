@@ -209,7 +209,7 @@ class ClientController extends Controller
             throw $this->notFoundException($request, $response);
         }
 
-        //$client->locations()->delete();
+        $client->locations()->delete();
         //$client->locations()->detach();
         $client->delete();
 
