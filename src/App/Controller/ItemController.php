@@ -40,7 +40,23 @@ class ItemController extends Controller
 
         return $this->ok($response, $item);
     }
+    /**
+     * Get one item by barcode     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $code
+     * @return Response
+     */
+    public function getByCode(Request $request, Response $response, $code)
+    {
+        $item = Item::where('code','=',$code)->first();
 
+        if (null === $item) {
+            throw $this->notFoundException($request, $response);
+        }
+
+        return $this->ok($response, $item);
+    }
     /**
      * Add item
      *

@@ -21,7 +21,7 @@ class Location extends Model
     /** Get Location items*/ 
     public function items() 
     { 
-    	return $this->belongsToMany('App\Model\Item'); 
+    	return $this->belongsToMany('App\Model\Item');
     }
 
     public function client()
