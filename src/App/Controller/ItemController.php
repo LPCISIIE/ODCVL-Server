@@ -40,9 +40,6 @@ class ItemController extends Controller
 
         return $this->ok($response, $item);
     }
-
-
-
     /**
      * Get one item by barcode     *
      * @param Request $request
