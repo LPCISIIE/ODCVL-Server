@@ -12,6 +12,10 @@ class Item extends Model
 
     protected $fillable = [
         'code',
+        'prix',
+        'status',
+        'reparations',
+        'remarques',
         'purchased_at'
     ];
 

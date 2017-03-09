@@ -41,10 +41,6 @@ class LocationController extends Controller
 
         return $this->ok($response, $location);
     }
-
-
-
-
      /**
      * Add Location
      *
@@ -131,8 +127,6 @@ class LocationController extends Controller
         return $this->validationErrors($response);
     }
 
-
-
     /**
      * Edit Location
      *
@@ -179,7 +173,7 @@ class LocationController extends Controller
                 ]
             ],
             'status' => [
-                'rules' => V::notBlank(),
+                'rules' => V::intVal(),
                 'messages' => [
                     'notBlank' => 'Le statut est requis'
                 ]
