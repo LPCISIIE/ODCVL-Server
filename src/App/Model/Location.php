@@ -16,13 +16,10 @@ class Location extends Model
         'created_at',
         'updated_at',
         'status',
-        'prix',
-        'client_id'
+        'prix'
     ];
 
-
-    /** Get Location items*/ 
-    public function items() 
+    public function items()
     { 
     	return $this->belongsToMany('App\Model\Item');
     }
@@ -31,5 +28,4 @@ class Location extends Model
     {
         return $this->belongsTo('App\Model\Client');
     }
-    
 }

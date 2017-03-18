@@ -24,7 +24,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Get one Locaiton
+     * Get one Location
      *
      * @param Request $request
      * @param Response $response
@@ -54,7 +54,7 @@ class LocationController extends Controller
             'date_debut' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'La date de début de location est requis',
+                    'notBlank' => 'La date de début de location est requise',
                     'date' => 'Veuillez saisir une date valide'
                 ]
             ],
@@ -68,34 +68,29 @@ class LocationController extends Controller
             'client_id' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le Client est requis'
+                    'notBlank' => 'Le client est requis'
                 ]
             ],
-
             'status' => [
                 'rules' => V::intVal(),
                 'messages' => [
-                    'intVal' => 'Status invalide'
+                    'intVal' => 'Statut invalide'
                 ]
             ],
-
             'items' => [
-                'rules' => V::arrayVal()->each(v::intVal()),
+                'rules' => V::arrayVal()->each(V::intVal()),
                 'messages' => [
-                    'arrayVal' => 'Un ou plusieurs items sont invalide'
+                    'arrayVal' => 'Un ou plusieurs items sont invalides'
                 ]
             ]
-
-
         ]);
 
         $arr_items = $request->getParam('items');
 
         if ($arr_items) {
+            $items = Item::find($arr_items);
 
-            $items = Item::findMany($arr_items)->toArray();
-
-            if (null === $items) {
+            if ($items->isEmpty()) {
                 $this->validator->addError('items', 'Items inconnu');
             }
         }
@@ -108,15 +103,14 @@ class LocationController extends Controller
             }
         }
 
-        if ( $this->validator->isValid()) {
+        if ($this->validator->isValid()) {
             $location = new Location([
-            'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
-            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
-            //'client_id' => 1
+                'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
+                'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
             ]);
 
             $location->client()->associate($client);
-             $location->save();
+            $location->save();
             $location->items()->attach($arr_items);
 
             return $this->created($response, 'get_location', [
@@ -175,7 +169,7 @@ class LocationController extends Controller
             'status' => [
                 'rules' => V::intVal(),
                 'messages' => [
-                    'notBlank' => 'Le statut est requis'
+                    'intVal' => 'Statut invalide'
                 ]
             ],
             'client_id' => [
@@ -230,5 +224,4 @@ class LocationController extends Controller
 
         return $this->noContent($response);
     }
-  
 }
