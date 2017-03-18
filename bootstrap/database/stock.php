@@ -20,9 +20,9 @@ Manager::schema()->create('item', function (Blueprint $table) {
     $table->increments('id');
     $table->string('code')->unique();
     $table->decimal('prix',9,2);
-    $table->enum('status', ['loué','disponible']);
-    $table->string('reparations');
-    $table->string('remarques');
+    $table->enum('status', ['loué','disponible','indisponible']);
+    $table->string('reparations')->nullable();
+    $table->string('remarques')->nullable();
     $table->date('purchased_at');
     $table->unsignedInteger('product_id');
     $table->timestamps();
