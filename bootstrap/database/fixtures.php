@@ -32,6 +32,27 @@ $products = [
 
 $items = [
     [
+        'code'        => 'BHVHV45',
+        'prix'        =>  75.00,
+        'status'      =>  'loué',
+        'reparations' =>  'aucune réparation envisagée',
+        'remarques'   =>  'pas de remarques particulières',
+        'product'     => 1
+    ],
+    [
+        'code' => 'IKNBG78',
+        'prix'        =>  85.00,
+        'status'      =>  'disponible',
+        'reparations' =>  'aucune réparation envisagée',
+        'remarques'   =>  'pas de remarques particulières',
+        'product' => 2
+    ],
+    [
+        'code' => 'FPHOI88',
+        'prix'        =>  105.00,
+        'status'      =>  'loué',
+        'reparations' =>  'aucune réparation envisagée',
+        'remarques'   =>  'pas de remarques particulières',
         'code' => '3001732687696',
         'product' => 1
     ],
@@ -125,6 +146,10 @@ foreach ($products as $product) {
 foreach ($items as $item) {
     $i = new Item([
         'code' => $item['code'],
+        'prix' => $item['prix'],
+        'status' => $item['status'],
+        'reparations' => $item['reparations'],
+        'remarques' => $item['remarques'],
         'purchased_at' => new \DateTime()
     ]);
     $i->product()->associate($item['product']);

@@ -19,6 +19,10 @@ Manager::schema()->create('product', function (Blueprint $table) {
 Manager::schema()->create('item', function (Blueprint $table) {
     $table->increments('id');
     $table->string('code')->unique();
+    $table->decimal('prix',9,2);
+    $table->enum('status', ['loué','disponible','indisponible']);
+    $table->string('reparations')->nullable();
+    $table->string('remarques')->nullable();
     $table->date('purchased_at');
     $table->unsignedInteger('product_id');
     $table->timestamps();
