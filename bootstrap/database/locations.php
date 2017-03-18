@@ -18,7 +18,8 @@ Manager::schema()->create('location', function (Blueprint $table) {
     $table->date('date_fin');
     $table->date('created_at');
     $table->date('updated_at');
-    $table->unsignedsmallInteger('status')->default(0);
+    $table->enum('status', ['active','inactive'])->default('inactive');
+    $table->decimal('prix',9,2);
     $table->unsignedInteger('client_id');
     $table->foreign('client_id')->references('id')->on('client');
 });

@@ -82,19 +82,22 @@ $locations = [
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 130,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 150,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 140,
         'client_id' => 2
     ]
 ];
@@ -165,7 +168,8 @@ foreach ($locations as $location) {
     $l = new Location([
         'date_debut' => $location['date_debut'],
         'date_fin' => $location['date_fin'],
-        'status' => $location['status']
+        'status' => $location['status'],
+        'prix' => $location['prix']
     ]);
 
     $l->client()->associate($location['client_id']);

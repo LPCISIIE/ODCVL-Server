@@ -16,6 +16,7 @@ class Location extends Model
         'created_at',
         'updated_at',
         'status',
+        'prix',
         'client_id'
     ];
 
