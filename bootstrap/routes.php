@@ -12,4 +12,3 @@ require $dir . 'product.php';
 require $dir . 'item.php';
 require $dir . 'location.php';
 require $dir . 'client.php';
-
