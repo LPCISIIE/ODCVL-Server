@@ -108,10 +108,8 @@ class ClientController extends Controller
             ]);
 
             $client->save();
-
-            return $this->created($response, 'get_client', [
-                'id' => $client->id
-            ]);
+            $data = json_decode($client,true);
+            return $response->withJson($data, 201);
         }
 
         return $this->validationErrors($response);

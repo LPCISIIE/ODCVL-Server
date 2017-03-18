@@ -16,6 +16,8 @@ Manager::schema()->dropIfExists('item_location');
 Manager::schema()->dropIfExists('item');
 Manager::schema()->dropIfExists('product');
 Manager::schema()->dropIfExists('category');
+Manager::schema()->disableForeignKeyConstraints(); 
 Manager::schema()->dropIfExists('location');
 Manager::schema()->dropIfExists('client');
-
+Manager::schema()->dropIfExists('input');
+Manager::schema()->dropIfExists('output');

@@ -55,14 +55,6 @@ $items = [
         'remarques'   =>  'pas de remarques particulières',
         'code' => '3001732687696',
         'product' => 1
-    ],
-    [
-        'code' => '3004510913468',
-        'product' => 2
-    ],
-    [
-        'code' => '3009010534441',
-        'product' => 1
     ]
 ];
 
@@ -90,19 +82,22 @@ $locations = [
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 130,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 150,
         'client_id' => 1
     ],
     [
         'date_debut' => '2017-03-09',
         'date_fin' => '2017-03-09',
-        'status' => 0,
+        'status' => 'active',
+        'prix' => 140,
         'client_id' => 2
     ]
 ];
@@ -110,13 +105,21 @@ $locations = [
 
 $clients = [
     [
-        'nom' => 'test_nom',
-        'prenom' => 'test_prenom'
+        'nom' => 'zakaria',
+        'prenom' => 'elouarchi',
+        'organisme' => 'UNIV LORRAINE',
+        'adresse' => '17 rue du sangl',
+        'telephone' => '0767767867',
+        'email' => 're@gmail.com'
     ],
     [
-        'nom' => 'test_nom2',
-        'prenom' => 'test_prenom2'
-    ]
+        'nom' => 'kamel',
+        'prenom' => 'remaki',
+        'organisme' => 'IUT nancy',
+        'adresse' => '8 rue aristid briand',
+        'telephone' => '0667767867',
+        'email' => 'kamel@gmail.com'
+    ],
 ];
 
 foreach ($categories as $category => $subCategories) {
@@ -165,7 +168,8 @@ foreach ($locations as $location) {
     $l = new Location([
         'date_debut' => $location['date_debut'],
         'date_fin' => $location['date_fin'],
-        'status' => $location['status']
+        'status' => $location['status'],
+        'prix' => $location['prix']
     ]);
 
     $l->client()->associate($location['client_id']);
