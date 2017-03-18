@@ -55,14 +55,6 @@ $items = [
         'remarques'   =>  'pas de remarques particulières',
         'code' => '3001732687696',
         'product' => 1
-    ],
-    [
-        'code' => '3004510913468',
-        'product' => 2
-    ],
-    [
-        'code' => '3009010534441',
-        'product' => 1
     ]
 ];
 
@@ -110,13 +102,21 @@ $locations = [
 
 $clients = [
     [
-        'nom' => 'test_nom',
-        'prenom' => 'test_prenom'
+        'nom' => 'zakaria',
+        'prenom' => 'elouarchi',
+        'organisme' => 'UNIV LORRAINE',
+        'adresse' => '17 rue du sangl',
+        'telephone' => '0767767867',
+        'email' => 're@gmail.com'
     ],
     [
-        'nom' => 'test_nom2',
-        'prenom' => 'test_prenom2'
-    ]
+        'nom' => 'kamel',
+        'prenom' => 'remaki',
+        'organisme' => 'IUT nancy',
+        'adresse' => '8 rue aristid briand',
+        'telephone' => '0667767867',
+        'email' => 'kamel@gmail.com'
+    ],
 ];
 
 foreach ($categories as $category => $subCategories) {
