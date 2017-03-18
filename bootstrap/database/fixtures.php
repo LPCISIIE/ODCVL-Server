@@ -21,9 +21,7 @@ $categories = [
         'Vélo de route',
         'Tandem'
     ],
-    'Divers' => [
-
-    ]
+    'Divers' => []
 ];
 
 $products = [
@@ -55,8 +53,17 @@ $items = [
         'status'      =>  'loué',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
+        'code' => '3001732687696',
         'product' => 1
     ],
+    [
+        'code' => '3004510913468',
+        'product' => 2
+    ],
+    [
+        'code' => '3009010534441',
+        'product' => 1
+    ]
 ];
 
 
@@ -97,10 +104,20 @@ $locations = [
         'date_fin' => '2017-03-09',
         'status' => 0,
         'client_id' => 2
-    ],
+    ]
 ];
 
 
+$clients = [
+    [
+        'nom' => 'test_nom',
+        'prenom' => 'test_prenom'
+    ],
+    [
+        'nom' => 'test_nom2',
+        'prenom' => 'test_prenom2'
+    ]
+];
 
 foreach ($categories as $category => $subCategories) {
     $c = new Category([
@@ -140,10 +157,9 @@ foreach ($items as $item) {
 }
 
 foreach ($clients as $client) {
-    $cl = new client($client);
+    $cl = new Client($client);
     $cl->save();
 }
-
 
 foreach ($locations as $location) {
     $l = new Location([
@@ -154,5 +170,5 @@ foreach ($locations as $location) {
 
     $l->client()->associate($location['client_id']);
     $l->save();
-    $l->items()->attach([1,2]);
+    $l->items()->attach([1, 2]);
 }
