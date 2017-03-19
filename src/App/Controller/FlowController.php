@@ -2,17 +2,16 @@
 
 namespace App\Controller;
 
+use App\Model\Flow;
 use App\Model\Location;
-use App\Model\Item;
-use App\Model\Client;
 use Respect\Validation\Validator as V;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class LocationController extends Controller
+class FlowController extends Controller
 {
     /**
-     * Get Location list
+     * Get flows list
      *
      * @param Request $request
      * @param Response $response
@@ -20,11 +19,11 @@ class LocationController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Location::with('client')->get());
+        return $this->ok($response, Flow::with('location')->get());
     }
 
     /**
-     * Get one Location
+     * Get one flow
      *
      * @param Request $request
      * @param Response $response
@@ -33,16 +32,17 @@ class LocationController extends Controller
      */
     public function get(Request $request, Response $response, $id)
     {
-        $location = Location::find($id);
+        $flow = Flow::find($id);
 
-        if (null === $location) {
+        if (null === $flow) {
             throw $this->notFoundException($request, $response);
         }
 
-        return $this->ok($response, $location);
+        return $this->ok($response, $flow);
     }
-     /**
-     * Add Location
+
+    /**
+     * Add flow
      *
      * @param Request $request
      * @param Response $response
@@ -51,78 +51,66 @@ class LocationController extends Controller
     public function post(Request $request, Response $response)
     {
         $this->validator->validate($request, [
-            'date_debut' => [
+            'date_sortie' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'La date de début de location est requise',
+                    'notBlank' => 'La date de sortie  est requise',
                     'date' => 'Veuillez saisir une date valide'
                 ]
             ],
-            'date_fin' => [
+            'date_entree' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'Veuillez préciser la date d\'achat',
+                    'notBlank' => 'Veuillez préciser la date d\'entrée',
                     'date' => 'Veuillez saisir une date valide'
                 ]
             ],
-            'client_id' => [
+            'location_id' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le client est requis'
+                    'notBlank' => 'La location est requise'
+                ]
+            ],
+            'type' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Le type est requis'
                 ]
             ],
             'status' => [
-                'rules' => V::intVal(),
+                'rules' => V::notBlank(),
                 'messages' => [
-                    'intVal' => 'Statut invalide'
-                ]
-            ],
-            'items' => [
-                'rules' => V::arrayVal()->each(V::intVal()),
-                'messages' => [
-                    'arrayVal' => 'Un ou plusieurs items sont invalides'
+                    'notBlank' => 'Statut est requis'
                 ]
             ]
         ]);
 
-        $arr_items = $request->getParam('items');
+        if ($request->getParam('location_id')) {
+            $location = Location::find($request->getParam('location_id'));
 
-        if ($arr_items) {
-            $items = Item::find($arr_items);
-
-            if ($items->isEmpty()) {
-                $this->validator->addError('items', 'Items inconnu');
-            }
-        }
-
-        if ($request->getParam('client_id')) {
-            $client = Client::find($request->getParam('client_id'));
-
-            if (null === $client) {
-                $this->validator->addError('client_id', 'Client inconnu');
+            if (null === $location) {
+                $this->validator->addError('location_id', 'Location inconnue');
             }
         }
 
         if ($this->validator->isValid()) {
-            $location = new Location([
-                'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
-                'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
+            $flow = new Flow([
+                'date_sortie' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_sortie')),
+                'date_entree' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_entree'))
             ]);
 
-            $location->client()->associate($client);
-            $location->save();
-            $location->items()->attach($arr_items);
+            $flow->location()->associate($location);
+            $flow->save();
 
-            return $this->created($response, 'get_location', [
-                'id' => $location->id
+            return $this->created($response, 'get_flow', [
+                'id' => $flow->id
             ]);
         }
-
         return $this->validationErrors($response);
     }
 
     /**
-     * Edit Location
+     * Edit flow
      *
      * @param Request $request
      * @param Response $response
@@ -131,24 +119,24 @@ class LocationController extends Controller
      */
     public function put(Request $request, Response $response, $id)
     {
-        $location = Location::find($id);
+        $flow = Flow::find($id);
 
-        if (null === $location) {
+        if (null === $flow) {
             throw $this->notFoundException($request, $response);
         }
 
         $this->validator->validate($request, [
-            'date_debut' => [
+            'date_sortie' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'Veuillez préciser la date de début',
+                    'notBlank' => 'Veuillez préciser la date de sortie',
                     'date' => '{{name}} n\'est pas une date valide'
                 ]
             ],
-            'date_fin' => [
+            'date_entree' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'Veuillez préciser la date de fin',
+                    'notBlank' => 'Veuillez préciser la date d\'entrée',
                     'date' => '{{name}} n\'est pas une date valide'
                 ]
             ],
@@ -166,46 +154,53 @@ class LocationController extends Controller
                     'date' => '{{name}} n\'est pas une date valide'
                 ]
             ],
+            'type' => [
+                'rules' => V::notBlank(),
+                'messages' => [
+                    'notBlank' => 'Le type est requis'
+                ]
+            ],
             'status' => [
                 'rules' => V::notBlank(),
                 'messages' => [
                     'notBlank' => 'Le statut est requis'
                 ]
             ],
-            'client_id' => [
+            'location_id' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le client est requis'
+                    'notBlank' => 'La location est requise'
                 ]
             ]
         ]);
 
-        if ($request->getParam('client_id')) {
-            $client = Client::find($request->getParam('client_id'));
+        if ($request->getParam('location_id')) {
+            $location = Location::find($request->getParam('location_id'));
 
-            if (null === $client) {
-                $this->validator->addError('client_id', 'Client inconnu');
+            if (null === $location) {
+                $this->validator->addError('location_id', 'Location inconnue');
             }
         }
 
         if ($this->validator->isValid()) {
-            $location->date_debut = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut'));
-            $location->date_fin = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'));
-            $location->created_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('created_at'));
-            $location->updated_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('updated_at'));
-            $location->status = $request->getParam('status');
-            $location->client()->associate($client);
-            $location->save();
+            $flow->date_sortie = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_sortie'));
+            $flow->date_entree = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_entree'));
+            $flow->created_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('created_at'));
+            $flow->updated_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('updated_at'));
+            $flow->type = $request->getParam('type');
+            $flow->status = $request->getParam('status');
+            $flow->location()->associate($location);
+            $flow->save();
 
             return $this->noContent($response);
         }
 
+
         return $this->validationErrors($response);
     }
 
-
     /**
-     * Delete location
+     * Delete flow
      *
      * @param Request $request
      * @param Response $response
@@ -214,13 +209,13 @@ class LocationController extends Controller
      */
     public function delete(Request $request, Response $response, $id)
     {
-        $location = Location::find($id);
+        $flow = Flow::find($id);
 
-        if (null === $location) {
+        if (null === $flow) {
             throw $this->notFoundException($request, $response);
         }
 
-        $location->delete();
+        $flow->delete();
 
         return $this->noContent($response);
     }

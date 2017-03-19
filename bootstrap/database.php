@@ -19,7 +19,7 @@ require __DIR__ . '/database/drop.php';
 require __DIR__ . '/database/auth.php';
 require __DIR__ . '/database/stock.php';
 require __DIR__ . '/database/locations.php';
-require __DIR__ . '/database/inputs_ouputs.php';
+require __DIR__ . '/database/flows.php';
 
 // Save mock data
 require __DIR__ . '/database/fixtures.php';

@@ -85,7 +85,6 @@ class ItemController extends Controller
                 'rules' => V::notBlank(),
                 'messages' => [
                     'notBlank' => 'Le statut est requis',
-                    'notBlank' => 'Le statut est requis',
                 ]
             ],
             'purchased_at' => [

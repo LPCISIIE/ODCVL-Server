@@ -24,10 +24,7 @@ $container['ClientController'] = function ($container) {
     return new App\Controller\ClientController($container);
 };
 
-$container['InPutController'] = function ($container) {
-    return new App\Controller\InPutController($container);
+$container['FlowController'] = function ($container) {
+    return new App\Controller\FlowController($container);
 };
 
-$container['OutPutController'] = function ($container) {
-    return new App\Controller\OutPutController($container);
-};
