@@ -21,5 +21,5 @@ Manager::schema()->dropIfExists('product');
 Manager::schema()->dropIfExists('category');
 Manager::schema()->dropIfExists('location');
 Manager::schema()->dropIfExists('client');
-Manager::schema()->dropIfExists('input');
-Manager::schema()->dropIfExists('output');
+Manager::schema()->dropIfExists('flow');
+

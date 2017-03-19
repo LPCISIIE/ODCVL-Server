@@ -4,15 +4,16 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OutPut extends Model
+class Flow extends Model
 {
-    protected $table = 'output';
+    protected $table = 'flow';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'date_entree',
         'date_sortie',
-        'date_retour',
+        'type',
         'status',
         'created_at',
         'updated_at'
