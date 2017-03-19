@@ -10,8 +10,6 @@ class Client extends Model
 
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
-
     protected $fillable = [
         'nom',
         'prenom',
@@ -20,7 +18,6 @@ class Client extends Model
         'telephone',
         'email'
     ];
-
 
     public function locations()
     {

@@ -32,7 +32,7 @@ $products = [
 
 $items = [
     [
-        'code'        => 'BHVHV45',
+        'code'        => '3004510913468',
         'prix'        =>  75.00,
         'status'      =>  'loué',
         'reparations' =>  'aucune réparation envisagée',
@@ -40,42 +40,21 @@ $items = [
         'product'     => 1
     ],
     [
-        'code' => 'IKNBG78',
+        'code'        => '3009010534441',
         'prix'        =>  85.00,
         'status'      =>  'disponible',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
-        'product' => 2
+        'product'     => 2
     ],
     [
-        'code' => 'FPHOI88',
+        'code'        => '3001732687696',
         'prix'        =>  105.00,
         'status'      =>  'loué',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
-        'code' => '3001732687696',
-        'product' => 1
+        'product'     => 1
     ]
-];
-
-
-$clients = [
-    [
-        'nom' => 'zakaria',
-        'prenom' => 'elouarchi',
-        'organisme' => 'UNIV LORRAINE',
-        'adresse' => '17 rue du sangl',
-        'telephone' => '0767767867',
-        'email' => 're@gmail.com'
-    ],
-    [
-        'nom' => 'kamel',
-        'prenom' => 'remaki',
-        'organisme' => 'IUT nancy',
-        'adresse' => '8 rue aristid briand',
-        'telephone' => '0667767867',
-        'email' => 'kamel@gmail.com'
-    ],
 ];
 
 $locations = [

@@ -16,13 +16,10 @@ class Location extends Model
         'created_at',
         'updated_at',
         'status',
-        'prix',
-        'client_id'
+        'prix'
     ];
 
-
-    /** Get Location items*/ 
-    public function items() 
+    public function items()
     { 
     	return $this->belongsToMany('App\Model\Item');
     }
@@ -32,10 +29,21 @@ class Location extends Model
         return $this->belongsTo('App\Model\Client');
     }
 
+
     public function getTotalPrice() 
     {
         return $this->items()->sum('prix');
     }
 
-    
+  
+    public function inputs()
+    {
+        return $this->hasMany('App\Model\InPut');
+    }
+
+    public function outputs()
+    {
+        return $this->hasMany('App\Model\OuPut');
+    }
+
 }

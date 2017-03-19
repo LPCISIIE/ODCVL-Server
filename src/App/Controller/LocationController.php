@@ -24,7 +24,7 @@ class LocationController extends Controller
     }
 
     /**
-     * Get one Locaiton
+     * Get one Location
      *
      * @param Request $request
      * @param Response $response
@@ -54,7 +54,7 @@ class LocationController extends Controller
             'date_debut' => [
                 'rules' => V::notBlank()->date('d/m/Y'),
                 'messages' => [
-                    'notBlank' => 'La date de début de location est requis',
+                    'notBlank' => 'La date de début de location est requise',
                     'date' => 'Veuillez saisir une date valide'
                 ]
             ],
@@ -68,14 +68,13 @@ class LocationController extends Controller
             'client_id' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le Client est requis'
+                    'notBlank' => 'Le client est requis'
                 ]
             ],
-
             'status' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'intVal' => 'Status invalide'
+                    'intVal' => 'Statut invalide'
                 ]
             ]
         ]);
@@ -90,6 +89,7 @@ class LocationController extends Controller
         {
             $this->validator->addError('items', 'Une location active doit contenir des items');
         }
+      
 
         if ($request->getParam('client_id')) {
             $client = Client::find($request->getParam('client_id'));
@@ -99,7 +99,7 @@ class LocationController extends Controller
             }
         }
 
-        if ( $this->validator->isValid()) {
+        if ($this->validator->isValid()) {
             $location = new Location([
             'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
             'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin')),
@@ -167,7 +167,7 @@ class LocationController extends Controller
             'status' => [
                 'rules' => V::intVal(),
                 'messages' => [
-                    'notBlank' => 'Le statut est requis'
+                    'intVal' => 'Statut invalide'
                 ]
             ],
             'client_id' => [
@@ -222,5 +222,4 @@ class LocationController extends Controller
 
         return $this->noContent($response);
     }
-  
 }
