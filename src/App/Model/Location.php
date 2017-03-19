@@ -28,4 +28,15 @@ class Location extends Model
     {
         return $this->belongsTo('App\Model\Client');
     }
+
+    public function inputs()
+    {
+        return $this->hasMany('App\Model\InPut');
+    }
+
+    public function outputs()
+    {
+        return $this->hasMany('App\Model\OuPut');
+    }
+
 }

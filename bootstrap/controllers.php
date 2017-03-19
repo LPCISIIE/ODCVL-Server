@@ -23,3 +23,11 @@ $container['LocationController'] = function ($container) {
 $container['ClientController'] = function ($container) {
     return new App\Controller\ClientController($container);
 };
+
+$container['InPutController'] = function ($container) {
+    return new App\Controller\InPutController($container);
+};
+
+$container['OutPutController'] = function ($container) {
+    return new App\Controller\OutPutController($container);
+};
