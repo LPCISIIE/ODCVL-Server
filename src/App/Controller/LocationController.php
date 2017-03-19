@@ -73,31 +73,22 @@ class LocationController extends Controller
             ],
 
             'status' => [
-                'rules' => V::intVal(),
+                'rules' => V::notBlank(),
                 'messages' => [
                     'intVal' => 'Status invalide'
                 ]
-            ],
-
-            'items' => [
-                'rules' => V::arrayVal()->each(v::intVal()),
-                'messages' => [
-                    'arrayVal' => 'Un ou plusieurs items sont invalide'
-                ]
             ]
-
-
         ]);
 
         $arr_items = $request->getParam('items');
 
         if ($arr_items) {
-
             $items = Item::findMany($arr_items)->toArray();
-
-            if (null === $items) {
-                $this->validator->addError('items', 'Items inconnu');
-            }
+            echo json_encode(value);
+        }
+        else if ( $request->getParam('status') === "active" )
+        {
+            $this->validator->addError('items', 'Une location active doit contenir des items');
         }
 
         if ($request->getParam('client_id')) {
@@ -111,17 +102,18 @@ class LocationController extends Controller
         if ( $this->validator->isValid()) {
             $location = new Location([
             'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
-            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
-            //'client_id' => 1
+            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin')),
+            'status' => $request->getParam('status'),
+            'prix' => 0
             ]);
 
             $location->client()->associate($client);
-             $location->save();
+            $location->save();
             $location->items()->attach($arr_items);
-
-            return $this->created($response, 'get_location', [
-                'id' => $location->id
-            ]);
+            $location->prix = $location->getTotalPrice();
+            $location->save();
+            $data = json_decode($location,true);
+            return $response->withJson($data, 201);
         }
 
         return $this->validationErrors($response);

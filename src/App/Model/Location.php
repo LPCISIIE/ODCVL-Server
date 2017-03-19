@@ -31,5 +31,11 @@ class Location extends Model
     {
         return $this->belongsTo('App\Model\Client');
     }
+
+    public function getTotalPrice() 
+    {
+        return $this->items()->sum('prix');
+    }
+
     
 }
