@@ -72,15 +72,9 @@ class LocationController extends Controller
                 ]
             ],
             'status' => [
-                'rules' => V::intVal(),
+                'rules' => V::notBlank(),
                 'messages' => [
                     'intVal' => 'Statut invalide'
-                ]
-            ],
-            'items' => [
-                'rules' => V::arrayVal()->each(V::intVal()),
-                'messages' => [
-                    'arrayVal' => 'Un ou plusieurs items sont invalides'
                 ]
             ]
         ]);
@@ -88,12 +82,14 @@ class LocationController extends Controller
         $arr_items = $request->getParam('items');
 
         if ($arr_items) {
-            $items = Item::find($arr_items);
-
-            if ($items->isEmpty()) {
-                $this->validator->addError('items', 'Items inconnu');
-            }
+            $items = Item::findMany($arr_items)->toArray();
+            echo json_encode(value);
         }
+        else if ( $request->getParam('status') === "active" )
+        {
+            $this->validator->addError('items', 'Une location active doit contenir des items');
+        }
+      
 
         if ($request->getParam('client_id')) {
             $client = Client::find($request->getParam('client_id'));
@@ -105,17 +101,19 @@ class LocationController extends Controller
 
         if ($this->validator->isValid()) {
             $location = new Location([
-                'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
-                'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'))
+            'date_debut' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut')),
+            'date_fin' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin')),
+            'status' => $request->getParam('status'),
+            'prix' => 0
             ]);
 
             $location->client()->associate($client);
             $location->save();
             $location->items()->attach($arr_items);
-
-            return $this->created($response, 'get_location', [
-                'id' => $location->id
-            ]);
+            $location->prix = $location->getTotalPrice();
+            $location->save();
+            $data = json_decode($location,true);
+            return $response->withJson($data, 201);
         }
 
         return $this->validationErrors($response);
