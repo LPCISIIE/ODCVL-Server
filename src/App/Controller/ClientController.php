@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\Category;
 use App\Model\Client;
-use App\Model\Location;
 use Respect\Validation\Validator as V;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -56,60 +54,56 @@ class ClientController extends Controller
                 'rules' => V::notBlank(),
                 'messages' => [
                     'notBlank' => 'Le nom est requis'
-
                 ]
             ],
             'prenom' => [
                 'rules' => V::notBlank(),
                 'messages' => [
                     'notBlank' => 'Le prénom est requis'
-
                 ]
             ],
             'organisme' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le nom  de l\'organisme est requis'
-
+                    'notBlank' => 'Le nom de l\'organisme est requis'
                 ]
             ],
             'adresse' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'L\'adresse  est requise'
-
+                    'notBlank' => 'L\'adresse est requise'
                 ]
             ],
             'telephone' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'notBlank' => 'Le numéro de téléphone  est requis'
-
+                    'notBlank' => 'Le numéro de téléphone est requis'
                 ]
             ],
             'email' => [
-                'rules' => V::noWhitespace()->email(),
+                'rules' => V::notBlank()->noWhitespace()->email(),
                 'messages' => [
-                    'notBlank' => 'L\'email est requis'
-
+                    'notBlank' => 'L\'email est requis',
+                    'email' => 'Email invalide'
                 ]
-            ],
+            ]
         ]);
 
         if ($this->validator->isValid()) {
-            $client = new Client([
-                'nom' => $request->getParam('nom'),
-                'prenom' => $request->getParam('prenom'),
-                'organisme' => $request->getParam('organisme'),
-                'adresse' => $request->getParam('adresse'),
-                'telephone' => $request->getParam('telephone'),
-                'email' => $request->getParam('email')
-
-            ]);
+            $client = new Client($this->params($request, [
+                'nom',
+                'prenom',
+                'organisme',
+                'adresse',
+                'telephone',
+                'email'
+            ]));
 
             $client->save();
-            $data = json_decode($client,true);
-            return $response->withJson($data, 201);
+
+            return $this->created($response, 'get_client', [
+                'id' => $client->id
+            ]);
         }
 
         return $this->validationErrors($response);
@@ -163,33 +157,30 @@ class ClientController extends Controller
                 ]
             ],
             'email' => [
-                'rules' => V::notBlank(),
+                'rules' => V::notBlank()->noWhitespace()->email(),
                 'messages' => [
-                    'notBlank' => 'Veuillez donner un email au  client'
+                    'notBlank' => 'Veuillez donner un email au  client',
+                    'email' => 'Email invalide'
                 ]
             ],
         ]);
 
-
-
         if ($this->validator->isValid()) {
-            $client->nom = $request->getParam('nom');
-            $client->prenom = $request->getParam('prenom');
-            $client->organisme = $request->getParam('organisme');
-            $client->adresse = $request->getParam('adresse');
-            $client->telephone = $request->getParam('telephone');
-            $client->email = $request->getParam('email');
+            $client->fill($this->params($request, [
+                'nom',
+                'prenom',
+                'organisme',
+                'adresse',
+                'telephone',
+                'email'
+            ]));
             $client->save();
-
-            //$client->locations()->sync([$location->id]);
 
             return $this->noContent($response);
         }
 
         return $this->validationErrors($response);
     }
-
-
 
     /**
      * Delete client
@@ -208,19 +199,8 @@ class ClientController extends Controller
         }
 
         $client->locations()->delete();
-        //$client->locations()->detach();
         $client->delete();
 
         return $this->noContent($response);
     }
-
-
-
-
-
-
-
-
-
-
 }
