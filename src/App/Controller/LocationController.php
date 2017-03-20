@@ -84,7 +84,6 @@ class LocationController extends Controller
 
         if ($arr_items) {
             $items = Item::findMany($arr_items)->toArray();
-            echo json_encode(value);
         }
         else if ( $request->getParam('status') === "active" )
         {
