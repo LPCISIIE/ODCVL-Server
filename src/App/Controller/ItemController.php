@@ -74,13 +74,6 @@ class ItemController extends Controller
                     'alnum' => 'Le code ne peut contenir que des lettres et des chiffres'
                 ]
             ],
-            'prix' => [
-                'rules' => V::numeric(),
-                'messages' => [
-                    'notBlank' => 'Le prix est requis',
-                    'num' => 'Le prix ne peut contenir que  des chiffres'
-                ]
-              ],
             'status' => [
                 'rules' => V::notBlank(),
                 'messages' => [
@@ -117,7 +110,6 @@ class ItemController extends Controller
         if ($this->validator->isValid()) {
             $item = new Item([
                 'code' => $request->getParam('code'),
-                'prix' => $request->getParam('prix'),
                 'status' => $request->getParam('status'),
                 'reparations' => $request->getParam('reparations'),
                 'remarques' => $request->getParam('remarques'),
@@ -165,13 +157,6 @@ class ItemController extends Controller
                     'date' => '{{name}} n\'est pas une date valide'
                 ]
             ],
-            'prix' => [
-                'rules' => V::numeric(),
-                'messages' => [
-                    'notBlank' => 'Le prix est requis',
-                    'num' => 'Le prix ne peut contenir que  des chiffres'
-                ]
-            ],
             'status' => [
                 'rules' => V::notBlank(),
                 'messages' => [
@@ -198,7 +183,6 @@ class ItemController extends Controller
         if ($this->validator->isValid()) {
             $item->code = $request->getParam('code');
             $item->purchased_at = \DateTime::createFromFormat('d/m/Y', $request->getParam('purchased_at'));
-            $item->prix   = $request->getParam('prix');
             $item->status = $request->getParam('status');
             $item->reparations = $request->getParam('reparations');
             $item->remarques = $request->getParam('remarques');
