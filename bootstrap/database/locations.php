@@ -18,14 +18,12 @@ Manager::schema()->create('client', function (Blueprint $table) {
 Manager::schema()->create('location', function (Blueprint $table) {
     $table->increments('id');
     $table->unsignedInteger('client_id');
-
     $table->date('date_debut');
     $table->date('date_fin');
     $table->date('created_at');
     $table->date('updated_at');
-    $table->enum('status', ['active', 'inactive'])->default('inactive');
-    $table->decimal('prix', 9, 2);
-
+    $table->enum('status', ['active','inactive','completed'])->default('inactive');
+    $table->decimal('prix',9,2);
     $table->foreign('client_id')->references('id')->on('client');
 });
 
