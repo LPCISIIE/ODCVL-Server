@@ -25,15 +25,23 @@ $categories = [
 ];
 
 $products = [
-    'HAWX MAGNA 110 ATOMIC',
-    'ADVANTEDGE 105 HEAD',
-    'ALLTRACK 120 ROSSIGNOL'
+    [
+        'name'        => 'HAWX MAGNA 110 ATOMIC',
+        'prix'        =>  75.00
+    ],
+    [
+        'name'        => 'ADVANTEDGE 105 HEAD',
+        'prix'        =>  60.00
+    ],
+    [
+        'name'        => 'ALLTRACK 120 ROSSIGNOL',
+        'prix'        =>  50.00
+    ]
 ];
 
 $items = [
     [
         'code'        => '3004510913468',
-        'prix'        =>  75.00,
         'status'      =>  'loué',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
@@ -41,7 +49,6 @@ $items = [
     ],
     [
         'code'        => '3009010534441',
-        'prix'        =>  85.00,
         'status'      =>  'disponible',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
@@ -49,7 +56,6 @@ $items = [
     ],
     [
         'code'        => '3001732687696',
-        'prix'        =>  105.00,
         'status'      =>  'loué',
         'reparations' =>  'aucune réparation envisagée',
         'remarques'   =>  'pas de remarques particulières',
@@ -118,7 +124,8 @@ foreach ($categories as $category => $subCategories) {
 
 foreach ($products as $product) {
     $p = new Product([
-        'name' => $product
+        'name' => $product['name'],
+        'prix' => $product['prix']
     ]);
     $p->save();
 
@@ -128,7 +135,6 @@ foreach ($products as $product) {
 foreach ($items as $item) {
     $i = new Item([
         'code' => $item['code'],
-        'prix' => $item['prix'],
         'status' => $item['status'],
         'reparations' => $item['reparations'],
         'remarques' => $item['remarques'],

@@ -10,7 +10,7 @@ class Product extends Model
 
     protected $primaryKey = 'id';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name','prix'];
 
     public function items()
     {
