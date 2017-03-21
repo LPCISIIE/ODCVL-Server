@@ -62,6 +62,12 @@ class ProductController extends Controller
                 'messages' => [
                     'notBlank' => 'Veuillez sélectionner une catégorie'
                 ]
+            ],
+            'prix' => [
+                'rules' => V::numeric(),
+                'messages' => [
+                    'num' => 'Veuillez saisir un prix valide'
+                ]
             ]
         ]);
 
@@ -75,7 +81,8 @@ class ProductController extends Controller
 
         if ($this->validator->isValid()) {
             $product = new Product([
-                'name' => $request->getParam('name')
+                'name' => $request->getParam('name'),
+                'prix' => $request->getParam('prix')
             ]);
 
             $product->save();
@@ -116,6 +123,12 @@ class ProductController extends Controller
                 'rules' => V::notBlank(),
                 'messages' => [
                     'notBlank' => 'Veuillez sélectionner une catégorie'
+                ]
+            ],
+            'prix' => [
+                'rules' => V::numeric(),
+                'messages' => [
+                    'num' => 'Veuillez saisir un prix valide'
                 ]
             ]
         ]);

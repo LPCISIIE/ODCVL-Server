@@ -32,6 +32,9 @@ class Location extends Model
 
     public function getTotalPrice() 
     {
+        // GET Items
+        $items = $this->items();
+        
         return $this->items()->sum('prix');
     }
 
