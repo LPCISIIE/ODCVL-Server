@@ -74,7 +74,7 @@ class LocationController extends Controller
             'status' => [
                 'rules' => V::notBlank(),
                 'messages' => [
-                    'intVal' => 'Statut invalide'
+                    'notBlank' => 'Statut invalide'
                 ]
             ]
         ]);
@@ -110,10 +110,6 @@ class LocationController extends Controller
             $location->save();
             $location->items()->attach($arr_items);
             $location->prix = $location->getTotalPrice();
-
-            return $location->prix;
-
-            die();
             $location->save();
             $data = json_decode($location,true);
             return $response->withJson($data, 201);
