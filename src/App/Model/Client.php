@@ -23,4 +23,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Model\Location');
     }
+
+    public static function validateEmail($email)
+    {   
+        return Client::where('email', '=', $email)->first();
+    }
 }
