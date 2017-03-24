@@ -75,9 +75,9 @@ class ClientController extends Controller
                 ]
             ],
             'telephone' => [
-                'rules' => V::notBlank(),
+                'rules' => V::numeric(),
                 'messages' => [
-                    'notBlank' => 'Le numéro de téléphone est requis'
+                    'numeric' => 'Le numéro de téléphone doit être valide'
                 ]
             ],
             'email' => [
@@ -89,6 +89,11 @@ class ClientController extends Controller
             ]
         ]);
 
+        if(Client::validateEmail($request->getParam('email')) !== null)
+        {
+            $this->validator->addError('email', 'Cet email est déja utilisé');
+        }
+        
         if ($this->validator->isValid()) {
             $client = new Client($this->params($request, [
                 'nom',
@@ -100,10 +105,8 @@ class ClientController extends Controller
             ]));
 
             $client->save();
-
-            return $this->created($response, 'get_client', [
-                'id' => $client->id
-            ]);
+            $data = json_decode($client,true);
+            return $response->withJson($data, 201);
         }
 
         return $this->validationErrors($response);
