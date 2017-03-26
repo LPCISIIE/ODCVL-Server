@@ -79,17 +79,36 @@ class LocationController extends Controller
             ]
         ]);
 
-        $arr_items = $request->getParam('items');
+        // Vérification de la cohérance des dates
+        $date_debut = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_debut'));
+        $date_fin = \DateTime::createFromFormat('d/m/Y', $request->getParam('date_fin'));
+        if($date_fin >= $date_debut === false)
+        {
+            $this->validator->addError('date_fin', 'La date de fin doit être supérieur à la date de début');
+        }
 
+        // Vérification des items
+        $arr_items = $request->getParam('items');
+        $validated_items = array();
         if ($arr_items) {
-            $items = Item::findMany($arr_items)->toArray();
+
+            $items = Item::findMany($arr_items)->toArray();            
+            // On vérifie si un ou plusieurs items ne sont pas valide
+            $filterArray = array_filter($items, function ($var) {
+                return $var['status'] === "disponible";
+            });
+            $validated_items = array_column($filterArray, 'id');
+            if( sizeof($arr_items) !== sizeof($validated_items) )
+            {
+                $this->validator->addError('items', 'Un ou plusieurs items ne sont pas valides');
+            }
         }
         else if ( $request->getParam('status') === "active" )
         {
             $this->validator->addError('items', 'Une location active doit contenir des items');
         }
       
-
+        // Vérification du client
         if ($request->getParam('client_id')) {
             $client = Client::find($request->getParam('client_id'));
 
@@ -108,8 +127,13 @@ class LocationController extends Controller
 
             $location->client()->associate($client);
             $location->save();
-            $location->items()->attach($arr_items);
-            $location->prix = $location->getTotalPrice();
+            $location->items()->attach($validated_items);
+            $interval = $location['date_debut']->diff($location['date_fin']);
+            if($interval->d == 0)
+            {
+                $interval->d = 1;
+            }
+            $location->prix = $location->getTotalPrice() * $interval->d;
             $location->save();
             $data = json_decode($location,true);
             return $response->withJson($data, 201);
