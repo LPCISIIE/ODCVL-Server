@@ -6,4 +6,5 @@ $app->group('/locations', function () {
     $this->post('', 'LocationController:post')->setName('post_location');
     $this->put('/{id:[0-9]+}', 'LocationController:put')->setName('put_location');
     $this->delete('/{id:[0-9]+}', 'LocationController:delete')->setName('delete_location');
+    $this->put('/activation/{id:[0-9]+}', 'LocationController:activate')->setName('activate_location');
 });
