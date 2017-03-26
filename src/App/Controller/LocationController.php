@@ -143,6 +143,26 @@ class LocationController extends Controller
     }
 
     /**
+     * Activate a location
+     *
+     * @param Request $request
+     * @param Response $response
+     * @param string $id
+     * @return Response
+     */
+    public function activate(Request $request, Response $response, $id)
+    {
+        $location = Location::find($id);
+        if($location->status === 'inactive')
+        {
+            $location->status = 'active';
+            $location->save();
+            return $response->withJson($location, 200);
+        }
+        $data['error'] = 'Cette location ne peux être activé';
+        return $response->withJson($data, 405);
+    }
+    /**
      * Edit Location
      *
      * @param Request $request
