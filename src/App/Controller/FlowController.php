@@ -96,7 +96,9 @@ class FlowController extends Controller
         if ($this->validator->isValid()) {
             $flow = new Flow([
                 'date_sortie' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_sortie')),
-                'date_entree' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_entree'))
+                'date_entree' => \DateTime::createFromFormat('d/m/Y', $request->getParam('date_entree')),
+                'type' => $request->getParam('type'),
+                'status' => $request->getParam('status'),
             ]);
 
             $flow->location()->associate($location);
