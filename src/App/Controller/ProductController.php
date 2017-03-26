@@ -19,7 +19,7 @@ class ProductController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Product::with('categories')->get());
+        return $this->ok($response, Product::with('categories','items')->get());
     }
 
     /**
