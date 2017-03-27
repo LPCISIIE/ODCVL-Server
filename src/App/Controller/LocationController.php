@@ -265,4 +265,16 @@ class LocationController extends Controller
 
         return $this->noContent($response);
     }
+
+    public function getItemsLocation(Request $request, Response $response, $id)
+    {
+        $items = Location::with(['items'])->find($id);
+
+        if (null === $items) {
+            throw $this->notFoundException($request, $response);
+        }
+        $items = $items->toArray();
+
+        return $this->ok($response, $items);
+    }
 }

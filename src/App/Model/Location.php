@@ -40,14 +40,11 @@ class Location extends Model
     }
 
   
-    public function inputs()
+    public function flows()
     {
-        return $this->hasMany('App\Model\InPut');
+        return $this->hasMany('App\Model\Flow');
     }
 
-    public function outputs()
-    {
-        return $this->hasMany('App\Model\OuPut');
-    }
+
 
 }

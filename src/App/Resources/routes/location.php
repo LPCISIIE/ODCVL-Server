@@ -7,4 +7,5 @@ $app->group('/locations', function () {
     $this->put('/{id:[0-9]+}', 'LocationController:put')->setName('put_location');
     $this->delete('/{id:[0-9]+}', 'LocationController:delete')->setName('delete_location');
     $this->put('/activation/{id:[0-9]+}', 'LocationController:activate')->setName('activate_location');
+    $this->get('/{id:[0-9]+}/items', 'LocationController:getItemsLocation')->setName('get_items_location');
 });
