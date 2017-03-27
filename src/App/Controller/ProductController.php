@@ -66,7 +66,7 @@ class ProductController extends Controller
             'prix' => [
                 'rules' => V::numeric(),
                 'messages' => [
-                    'num' => 'Veuillez saisir un prix valide'
+                    'numeric' => 'Veuillez saisir un prix valide'
                 ]
             ]
         ]);
@@ -128,7 +128,7 @@ class ProductController extends Controller
             'prix' => [
                 'rules' => V::numeric(),
                 'messages' => [
-                    'num' => 'Veuillez saisir un prix valide'
+                    'numeric' => 'Veuillez saisir un prix valide'
                 ]
             ]
         ]);
