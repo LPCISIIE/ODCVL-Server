@@ -265,13 +265,20 @@ class LocationController extends Controller
     public function delete(Request $request, Response $response, $id)
     {
         $location = Location::find($id);
-
         if (null === $location) {
             throw $this->notFoundException($request, $response);
         }
 
+        foreach($location->items as $item)
+        {
+            if($item->status != 'indisponible')
+            {
+                $item->status = 'disponible';
+                $item->save();
+            }
+        }
+        
         $location->delete();
-
         return $this->noContent($response);
     }
 
