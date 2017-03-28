@@ -20,7 +20,7 @@ Manager::schema()->create('product', function (Blueprint $table) {
 Manager::schema()->create('item', function (Blueprint $table) {
     $table->increments('id');
     $table->string('code')->unique();
-    $table->enum('status', ['loué','disponible','indisponible']);
+    $table->enum('status', ['loué','disponible','indisponible','reserve']);
     $table->string('reparations')->nullable();
     $table->string('remarques')->nullable();
     $table->date('purchased_at');

@@ -107,7 +107,7 @@ class LocationController extends Controller
         {
             $this->validator->addError('items', 'Une location active doit contenir des items');
         }
-      
+        
         // Vérification du client
         if ($request->getParam('client_id')) {
             $client = Client::find($request->getParam('client_id'));
@@ -128,6 +128,11 @@ class LocationController extends Controller
             $location->client()->associate($client);
             $location->save();
             $location->items()->attach($validated_items);
+            foreach($location->items as $item)
+            {
+                $item->status = 'reserve';
+                $item->save();
+            }
             $interval = $location['date_debut']->diff($location['date_fin']);
             if($interval->d == 0)
             {
@@ -154,9 +159,13 @@ class LocationController extends Controller
     {
         $location = Location::find($id);
         if($location->status === 'inactive')
-        {
+        {   
             $location->status = 'active';
             $location->save();
+            foreach ($location->items as $item) {
+               $item->status = 'loué';
+               $item->save();
+            }
             return $response->withJson($location, 200);
         }
         $data['error'] = 'Cette location ne peux être activé';
