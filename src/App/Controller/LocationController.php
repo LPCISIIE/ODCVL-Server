@@ -158,7 +158,7 @@ class LocationController extends Controller
     public function activate(Request $request, Response $response, $id)
     {
         $location = Location::find($id);
-        if($location->status === 'inactive')
+        if($location->status === 'inactive' && sizeof($location->items) != 0)
         {   
             $location->status = 'active';
             $location->save();
@@ -168,7 +168,14 @@ class LocationController extends Controller
             }
             return $response->withJson($location, 200);
         }
-        $data['error'] = 'Cette location ne peux être activé';
+        if(sizeof($location->items) === 0)
+        {
+            $data['error'] = 'Une location doit contenir au moins un item';
+        }
+        else
+        {
+            $data['error'] = 'Cette location ne peux être activé';
+        }
         return $response->withJson($data, 405);
     }
     /**
@@ -277,7 +284,7 @@ class LocationController extends Controller
                 $item->save();
             }
         }
-        
+
         $location->delete();
         return $this->noContent($response);
     }
