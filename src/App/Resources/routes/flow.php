@@ -6,4 +6,4 @@ $app->group('/flows', function () {
     $this->post('', 'FlowController:post')->setName('post_flow');
     $this->put('/{id:[0-9]+}', 'FlowController:put')->setName('put_flow');
     $this->delete('/{id:[0-9]+}', 'FlowController:delete')->setName('delete_flow');
-})->add(new \App\Middleware\AuthMiddleware($container, 'Admin'));
+})->add(new \App\Middleware\AuthMiddleware($container, 'admin'));

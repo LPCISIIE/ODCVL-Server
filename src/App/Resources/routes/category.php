@@ -8,4 +8,4 @@ $app->group('/categories', function () {
     $this->delete('/{id:[0-9]+}', 'CategoryController:delete')->setName('delete_category');
 
     $this->get('/{id:[0-9]+}/products', 'CategoryController:getCategoryProducts')->setName('get_category_products');
-})->add(new \App\Middleware\AuthMiddleware($container, 'Admin'));
+})->add(new \App\Middleware\AuthMiddleware($container, 'admin'));
