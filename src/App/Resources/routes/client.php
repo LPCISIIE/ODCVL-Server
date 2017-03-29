@@ -6,4 +6,4 @@ $app->group('/clients', function () {
     $this->post('', 'ClientController:post')->setName('post_client');
     $this->put('/{id:[0-9]+}', 'ClientController:put')->setName('put_client');
     $this->delete('/{id:[0-9]+}', 'ClientController:delete')->setName('delete_client');
-});
+})->add(new \App\Middleware\AuthMiddleware($container, 'Admin'));
