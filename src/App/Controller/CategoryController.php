@@ -18,7 +18,13 @@ class CategoryController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        $categories = Category::with('subCategories')->where('parent_id', null)->get();
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $categories = Category::with('subCategories')
+            ->where('parent_id', null)
+            ->take(20)
+            ->skip(20 * ($page - 1))
+            ->get();
 
         return $this->ok($response, $categories);
     }
