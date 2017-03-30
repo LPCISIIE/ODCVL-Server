@@ -4,6 +4,10 @@ $container['AuthController'] = function ($container) {
     return new App\Controller\AuthController($container);
 };
 
+$container['UserController'] = function ($container) {
+    return new App\Controller\UserController($container);
+};
+
 $container['CategoryController'] = function ($container) {
     return new App\Controller\CategoryController($container);
 };

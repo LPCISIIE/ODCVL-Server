@@ -108,3 +108,16 @@ $sentinel->getRoleRepository()->createModel()->create(array(
         'user.update' => true
     )
 ));
+
+$role = $sentinel->findRoleByName('Admin');
+
+$user = $sentinel->registerAndActivate([
+    'username' => 'admin',
+    'email' => 'admin@odcvl.org',
+    'password' => 'admin',
+    'permissions' => [
+        'user.delete' => 0
+    ]
+]);
+
+$role->users()->attach($user);

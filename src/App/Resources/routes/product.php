@@ -6,4 +6,4 @@ $app->group('/products', function () {
     $this->post('', 'ProductController:post')->setName('post_product');
     $this->put('/{id:[0-9]+}', 'ProductController:put')->setName('put_product');
     $this->delete('/{id:[0-9]+}', 'ProductController:delete')->setName('delete_product');
-});
+})->add(new \App\Middleware\AuthMiddleware($container, 'admin'));
