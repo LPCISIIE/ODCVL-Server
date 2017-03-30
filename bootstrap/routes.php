@@ -7,6 +7,7 @@ $app->options('/{routes:.+}', function ($request, $response) {
 });
 
 require $dir . 'auth.php';
+require $dir . 'user.php';
 require $dir . 'category.php';
 require $dir . 'product.php';
 require $dir . 'item.php';
