@@ -18,7 +18,14 @@ class ClientController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Client::with('locations')->get());
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $clients = Client::with('locations')
+            ->take(20)
+            ->skip(20 * ($page - 1))
+            ->get();
+
+        return $this->ok($response, $clients);
     }
 
     /**

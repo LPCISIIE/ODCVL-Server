@@ -19,7 +19,14 @@ class ProductController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Product::with('categories','items')->get());
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $products = Product::with('categories','items')
+            ->take(20)
+            ->skip(20 * ($page - 1))
+            ->get();
+
+        return $this->ok($response, $products);
     }
 
     /**

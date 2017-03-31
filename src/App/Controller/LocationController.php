@@ -20,7 +20,14 @@ class LocationController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Location::with('client')->get());
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $locations = Location::with('client')
+            ->take(20)
+            ->skip(20 * ($page - 1))
+            ->get();
+
+        return $this->ok($response, $locations);
     }
 
     /**
