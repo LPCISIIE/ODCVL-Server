@@ -10,6 +10,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class ItemController extends Controller
 {
+    const ITEMS_PER_PAGE = 3;
+
     /**
      * Get items list
      *
@@ -21,10 +23,17 @@ class ItemController extends Controller
     {
         $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
 
+        $count = Item::count();
+
         $items = Item::with('product')
-            ->take(20)
-            ->skip(20 * ($page - 1))
+            ->take(self::ITEMS_PER_PAGE)
+            ->skip(self::ITEMS_PER_PAGE * ($page - 1))
             ->get();
+
+        $response = $response->withHeader(
+            'Content-Range',
+            'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $items->count() . '/' . $count
+        );
 
         return $this->ok($response, $items);
     }
