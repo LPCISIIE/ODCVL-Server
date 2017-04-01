@@ -10,7 +10,14 @@ class UserController extends Controller
 {
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, User::with('roles')->get());
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $users = User::with('roles')
+            ->take(20)
+            ->skip(20 * ($page - 1))
+            ->get();
+
+        return $this->ok($response, $users);
     }
 
     public function delete(Request $request, Response $response, $id)

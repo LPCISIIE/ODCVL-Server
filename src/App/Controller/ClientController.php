@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class ClientController extends Controller
 {
+    const ITEMS_PER_PAGE = 3;
+
     /**
      * Get products list
      *
@@ -18,7 +20,21 @@ class ClientController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        return $this->ok($response, Client::with('locations')->get());
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $count = Client::count();
+
+        $clients = Client::with('locations')
+            ->take(self::ITEMS_PER_PAGE)
+            ->skip(self::ITEMS_PER_PAGE * ($page - 1))
+            ->get();
+
+        $response = $response->withHeader(
+            'Content-Range',
+            'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $clients->count() . '/' . $count
+        );
+
+        return $this->ok($response, $clients);
     }
 
     /**

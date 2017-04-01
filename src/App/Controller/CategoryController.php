@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class CategoryController extends Controller
 {
+    const ITEMS_PER_PAGE = 3;
+
     /**
      * Get categories list
      *
@@ -18,7 +20,20 @@ class CategoryController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        $categories = Category::with('subCategories')->where('parent_id', null)->get();
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+
+        $count = Category::where('parent_id', null)->count();
+
+        $categories = Category::with('subCategories')
+            ->where('parent_id', null)
+            ->take(self::ITEMS_PER_PAGE)
+            ->skip(self::ITEMS_PER_PAGE * ($page - 1))
+            ->get();
+
+        $response = $response->withHeader(
+            'Content-Range',
+            'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $categories->count() . '/' . $count
+        );
 
         return $this->ok($response, $categories);
     }

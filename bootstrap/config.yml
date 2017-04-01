@@ -6,11 +6,11 @@ config:
     cors:
         origin:         '*'
         allow_headers:  'X-Requested-With, Content-Type, Accept, Origin, Authorization'
-        expose_headers: 'Location'
+        expose_headers: 'Location, Content-Range'
         methods:        'GET, POST, PUT, PATCH, DELETE'
         max_age:        3600
     jwt:
         # The server name used to encrypt access tokens and refresh tokens
         server_name:            localhost
-        access_token_lifetime:  3600 # seconds (1h)
+        access_token_lifetime:  7200 # seconds (2h)
         refresh_token_lifetime: 1209600 # seconds (14 days)
