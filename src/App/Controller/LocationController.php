@@ -11,7 +11,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class LocationController extends Controller
 {
-    const ITEMS_PER_PAGE = 3;
+    const ITEMS_PER_PAGE = 7;
 
     /**
      * Get Location list
@@ -49,7 +49,7 @@ class LocationController extends Controller
      */
     public function get(Request $request, Response $response, $id)
     {
-        $location = Location::find($id);
+        $location = Location::where('id','=',$id)->with('items')->first();
 
         if (null === $location) {
             throw $this->notFoundException($request, $response);
