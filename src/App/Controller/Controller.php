@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Model\User;
 use App\Service\JWTManager;
-use Awurth\Slim\Rest\Validation\Validator;
+use Awurth\SlimValidation\Validator;
 use Cartalyst\Sentinel\Sentinel;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -117,7 +117,7 @@ class Controller
      *
      * @param Response $response
      * @param mixed $data
-     * @return int
+     * @return Response
      */
     public function ok(Response $response, $data)
     {
@@ -152,7 +152,7 @@ class Controller
      * Return validation errors as a JSON array
      *
      * @param Response $response
-     * @return int
+     * @return Response
      */
     public function validationErrors(Response $response)
     {
@@ -165,7 +165,7 @@ class Controller
      * @param Response $response
      * @param mixed $data
      * @param int $status
-     * @return int
+     * @return Response
      */
     public function json(Response $response, $data, $status = 200)
     {

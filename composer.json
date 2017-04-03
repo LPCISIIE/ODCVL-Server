@@ -35,7 +35,7 @@
         "symfony/http-foundation": "^3.2",
         "incenteev/composer-parameter-handler": "^2.1",
         "firebase/php-jwt": "^4.0",
-        "awurth/slim-validation-rest": "^1.0"
+        "awurth/slim-validation": "^2.0"
     },
     "scripts": {
         "start": "php -S 0.0.0.0:8080 -t public public/index.php",
