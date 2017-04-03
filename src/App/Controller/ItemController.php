@@ -48,7 +48,7 @@ class ItemController extends Controller
      */
     public function get(Request $request, Response $response, $id)
     {
-        $item = Item::find($id);
+        $item = Item::where('id','=',$id)->with('product')->first();
 
         if (null === $item) {
             throw $this->notFoundException($request, $response);
