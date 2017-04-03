@@ -3,6 +3,9 @@ config:
         # When enabled, displays Exception name and stack trace
         # Set to false in production to display 500 Internal Server Error
         displayErrorDetails: true
+    rest:
+        # Used for generating links in API routes markdown
+        url: http://localhost/slim-rest-base
     cors:
         origin:         '*'
         allow_headers:  'X-Requested-With, Content-Type, Accept, Origin, Authorization'
