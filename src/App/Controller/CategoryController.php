@@ -20,21 +20,27 @@ class CategoryController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
-
-        $count = Category::where('parent_id', null)->count();
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 0;
 
         $categories = Category::with('subCategories')
-            ->where('parent_id', null)
-            ->take(self::ITEMS_PER_PAGE)
-            ->skip(self::ITEMS_PER_PAGE * ($page - 1))
-            ->get();
+            ->where('parent_id', null);
 
-        $response = $response->withHeader(
-            'Content-Range',
-            'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $categories->count() . '/' . $count
-        );
+        if ($page) {
+            $count = Category::where('parent_id', null)->count();
 
+            $categories = $categories
+                ->take(self::ITEMS_PER_PAGE)
+                ->skip(self::ITEMS_PER_PAGE * ($page - 1))
+                ->get();
+
+            $response = $response->withHeader(
+                'Content-Range',
+                'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $categories->count() . '/' . $count
+            );
+        } else {
+            $categories = $categories->get();
+        }
+        
         return $this->ok($response, $categories);
     }
 

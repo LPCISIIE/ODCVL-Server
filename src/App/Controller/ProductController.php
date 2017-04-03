@@ -21,19 +21,25 @@ class ProductController extends Controller
      */
     public function getCollection(Request $request, Response $response)
     {
-        $page = $request->getParam('page') ? (int) $request->getParam('page') : 1;
+        $page = $request->getParam('page') ? (int) $request->getParam('page') : 0;
 
-        $count = Product::count();
+        $products = Product::with(['categories', 'items']);
 
-        $products = Product::with(['categories', 'items'])
-            ->take(self::ITEMS_PER_PAGE)
-            ->skip(self::ITEMS_PER_PAGE * ($page - 1))
-            ->get();
+        if ($page) {
+            $count = Product::count();
 
-        $response = $response->withHeader(
-            'Content-Range',
-            'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $products->count() . '/' . $count
-        );
+            $products = $products
+                ->take(self::ITEMS_PER_PAGE)
+                ->skip(self::ITEMS_PER_PAGE * ($page - 1))
+                ->get();
+
+            $response = $response->withHeader(
+                'Content-Range',
+                'resources ' . (self::ITEMS_PER_PAGE * ($page - 1)) . '-' . $products->count() . '/' . $count
+            );
+        } else {
+            $products = $products->get();
+        }
 
         return $this->ok($response, $products);
     }
